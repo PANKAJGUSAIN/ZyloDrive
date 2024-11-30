@@ -1,18 +1,71 @@
-
+# Backend API Documentation
 ---
+## Packages Used
+   This project uses the following dependencies:
+<ul> 
+  <li><code>bcrypt (^5.1.1)</code>: A library to hash and check passwords.</li> 
+  <li><code>cors (^2.8.5)</code>: A package for enabling Cross-Origin Resource Sharing (CORS) in your app.</li>
+  <li><code>dotenv (^16.4.5)</code>: Loads environment variables from a <code>.env</code> file.</li>
+  <li><code>express (^4.21.1)</code>: A fast, unopinionated, minimalist web framework for Node.js.</li> 
+  <li><code>express-validator (^7.2.0)</code>: A set of middleware for validating and sanitizing request data.</li>
+  <li><code>jsonwebtoken (^9.0.2)</code>: A package to work with JSON Web Tokens (JWT).</li> 
+  <li><code>mongoose (^8.8.3)</code>: A MongoDB object modeling tool designed to work in an asynchronous environment.</li>
+</ul>
 
-# User Registration API
+## How to Run
 
-This is a simple MERN (MongoDB, Express, React, Node.js) stack application to handle user registration with basic validation, password hashing, and JWT-based authentication.
+### Prerequisites
 
-## Features
+- Node.js and npm installed
+- MongoDB running locally or use MongoDB Atlas for cloud database
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository_url>
+   ```
+
+2. Navigate to the project folder:
+
+   ```bash
+   cd <project_folder>
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Set up your `.env` file with necessary environment variables:
+
+   ```
+   PORT = 3000
+   JWT_SECRET=your_jwt_secret
+   MONGO_URI=your_mongodb_connection_string
+   ```
+
+5. Start the server:
+
+   ```bash
+   npm start
+   ```
+## Api Endpoints
+<details>
+  <summary>
+    <h2> /users/register</h2>
+  </summary>
+
+## Feature
 
 - User registration via `/users/register` route
 - Password hashing using `bcrypt`
 - JWT token generation for authentication  using `jsonwebtoken`
 - Data validation using `express-validator`
 
-## Project Structure
+## Structure
 
 The project follows a typical MERN stack structure with the following key files:
 
@@ -21,11 +74,6 @@ The project follows a typical MERN stack structure with the following key files:
 - **`user.route.js`**: Handles the HTTP routes for user registration and validation.
 - **`user.controller.js`**: Contains the logic for handling registration requests and responding with appropriate tokens and user data.
 
-## API Endpoints
-
-### `POST /users/register`
-
-Registers a new user.
 
 #### Request Body:
 
@@ -83,45 +131,6 @@ If any validation fails:
 }
 ```
 
-## How to Run
-
-### Prerequisites
-
-- Node.js and npm installed
-- MongoDB running locally or use MongoDB Atlas for cloud database
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone <repository_url>
-   ```
-
-2. Navigate to the project folder:
-
-   ```bash
-   cd <project_folder>
-   ```
-
-3. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Set up your `.env` file with necessary environment variables:
-
-   ```
-   JWT_SECRET=your_jwt_secret
-   MONGO_URI=your_mongodb_connection_string
-   ```
-
-5. Start the server:
-
-   ```bash
-   npm start
-   ```
 
 ### Testing
 
@@ -141,5 +150,4 @@ curl -X POST http://localhost:5000/users/register \
 - A JWT token is generated upon successful registration and sent back in the response for use in authentication on subsequent requests.
 
 ---
-
-This `README.md` file gives an overview of your user registration API, how to set it up, and how to interact with it. Let me know if you need any adjustments!
+</details>
