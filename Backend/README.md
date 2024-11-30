@@ -151,3 +151,108 @@ curl -X POST http://localhost:5000/users/register \
 
 ---
 </details>
+<details>
+  <summary>
+    <h2> /users/login</h2>
+  </summary>
+ Certainly! Here's the properly formatted documentation for the `/users/login` endpoint:
+
+---
+
+### **Feature**
+
+- **User login** functionality via the `/users/login` route.
+- Verifies the **email** and **password**.
+- Returns a **JWT token** upon successful login.
+- Data validation using **`express-validator`**.
+
+### **Structure**
+
+The login route is handled by the following components:
+
+- **`user.model.js`**: Defines the MongoDB schema for the user, including methods for password comparison and authentication token generation.
+- **`user.controller.js`**: Contains the logic for handling login requests, validating credentials, and generating the JWT token.
+- **`user.route.js`**: Handles the `/users/login` route and applies data validation.
+
+### **Request Body**
+
+```json
+{
+  "email": "emailid",
+  "password": "password"
+}
+```
+
+### **Validation Rules**
+
+- **email**: Must be a valid email format.
+- **password**: Must be at least 6 characters long.
+
+### **Response**
+
+#### **200 OK**
+
+```json
+{
+  "token": "token",
+  "user": {
+    "fullname": {
+      "firstname": "test_firstname",
+      "lastname": "test_lastname"
+    },
+    "_id": "id",
+    "email": "email",
+    "password": "password",
+    "__v": 0
+  }
+}
+```
+
+#### **Error Responses**
+
+##### **401 Unauthorized - Invalid Email or Password**
+
+If the email or password is incorrect:
+
+```json
+{
+  "message": "Invalid useremail or password"
+}
+```
+
+##### **400 Bad Request - Validation Errors**
+
+If any validation fails (e.g., invalid email format or short password):
+
+```json
+{
+    "errors": [
+        {
+            "type": "field",
+            "value": "te",
+            "msg": "Last name must be at least 3 characters long",
+            "path": "fullname.lastname",
+            "location": "body"
+        }
+    ]
+}
+```
+
+### **Testing**
+
+You can test the login endpoint using tools like **Postman** or **CURL**.
+
+#### **Example CURL Request**
+
+```bash
+curl -X POST http://localhost:5000/users/login \
+-H "Content-Type: application/json" \
+-d '{"email": "test@test.com", "password": "test_@353"}'
+```
+
+### **Notes**
+
+- If the **user** is not found, or the **password** doesn't match, the response will return a `401 Unauthorized` status with a message indicating that the email or password is invalid.
+- A **JWT token** is generated upon successful login and returned in the response. This token should be used for authenticating subsequent requests to protected endpoints.
+
+</details>
