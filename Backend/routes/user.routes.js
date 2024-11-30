@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
-const userController = require('../controllers/user.controller')
+const userController = require('../controllers/user.controller');
+const authMiddleware = require('../middlewares/middleware');
 
-
+////for user registration
 router.post('/register' , [
     // Validate email
     body('email').isEmail().withMessage('Invalid email format'),
@@ -19,6 +20,8 @@ router.post('/register' , [
     
 ],userController.registerUser)
 
+
+////for userlogin
 router.post('/login',[
     // Validate email
     body('email').isEmail().withMessage('Invalid email format'),
@@ -26,6 +29,10 @@ router.post('/login',[
     body('password').isLength({ min: 6 }).withMessage('Password should be at least 6 characters long'),
     
 ],userController.loginUser)
+
+
+//for fetching userprofile
+router.post('/profile',authMiddleware.authUser , userController.getUserProfile)
 
 
 

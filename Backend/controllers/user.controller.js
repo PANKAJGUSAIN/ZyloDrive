@@ -26,6 +26,9 @@ module.exports.registerUser = async (req , res , next ) =>{
     //generate the jwt token 
     const token = user.generateAuthToken()
 
+    //also setting the token in cookies
+    res.cookie('token',token);
+
     //send the response and the token to the user 
     res.status(201).json({ token , user });
 
@@ -53,5 +56,13 @@ module.exports.loginUser = async(req,res,next)=>{
 
     //if everything is correct then generate the token and send the response
     const token = user.generateAuthToken();
+
+    //also setting the token in cookies
+    res.cookie('token',token);
+
     res.status(200).json({ token , user });
+}
+
+module.exports.getUserProfile = async(req,res,next)=>{
+    res.status(200).json(req.user);
 }

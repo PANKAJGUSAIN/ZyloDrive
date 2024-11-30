@@ -155,7 +155,6 @@ curl -X POST http://localhost:5000/users/register \
   <summary>
     <h2> /users/login</h2>
   </summary>
- Certainly! Here's the properly formatted documentation for the `/users/login` endpoint:
 
 ---
 
@@ -254,5 +253,114 @@ curl -X POST http://localhost:5000/users/login \
 
 - If the **user** is not found, or the **password** doesn't match, the response will return a `401 Unauthorized` status with a message indicating that the email or password is invalid.
 - A **JWT token** is generated upon successful login and returned in the response. This token should be used for authenticating subsequent requests to protected endpoints.
+
+</details>
+
+<details>
+  <summary>
+    <h2> /users/profile</h2>
+  </summary>
+
+
+### **Feature**
+
+- **User Profile** retrieval functionality via the `/users/profile` route.
+- The route is protected and requires the user to be authenticated via a **JWT token**.
+- There are two ways to pass the token:
+  - **Via the Authorization header**: Use the format `Bearer ${token}`.
+  - **Via a cookie**: The token is stored in a cookie after a successful login.
+  
+### **Middleware**
+
+The **authentication middleware** is used to validate the JWT token before granting access to the profile route. The middleware checks for the token either in the request header or in the cookies.
+
+```javascript
+module.exports.authUser = async(req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+    
+    if (!token) {
+        res.status(401).json({ message: 'UnAuthorized' });
+    }
+
+    try {
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await userModel.findById(decode._id);
+        req.user = user;
+        return next();
+    } catch (err) {
+        return res.status(401).json({ message: 'UnAuthorized' });
+    }
+}
+```
+
+### **Request Method**
+
+- **POST**: `/users/profile`
+
+### **Request Headers**
+
+- **Authorization** (Optional if the token is passed in cookies):
+  - Format: `Bearer ${token}`
+  
+- **Cookie** (Optional if the token is passed in the header):
+  - Format: `token=${token}`
+
+### **Response**
+
+#### **200 OK**
+
+Upon successful authentication, the user's profile data will be returned.
+
+```json
+{
+  "_id": "id",
+  "fullname": {
+    "firstname": "firstname",
+    "lastname": "lastname"
+  },
+  "email": "email",
+  "password": "password"
+}
+```
+
+#### **Error Responses**
+
+##### **401 Unauthorized**
+
+If the token is missing, invalid, or expired, the response will return a `401 Unauthorized` status.
+
+```json
+{
+  "message": "UnAuthorized"
+}
+```
+
+### **Testing**
+
+You can test the profile endpoint using tools like **Postman** or **CURL**.
+
+#### **Example CURL Request (with Authorization Header)**
+
+```bash
+curl -X POST http://localhost:5000/users/profile \
+-H "Authorization: Bearer ${token}"
+```
+
+#### **Example CURL Request (with Cookie)**
+
+```bash
+curl -X POST http://localhost:5000/users/profile \
+-H "Content-Type: application/json" \
+--cookie "token=${token}"
+```
+
+### **Notes**
+
+- This route requires the user to be authenticated via a **JWT token**.
+- The token can be passed in the **Authorization header** or in **cookies**.
+- If the token is missing, invalid, or expired, the user will receive an `Unauthorized` response (`401` status).
+- The response contains the **user profile data** after successful authentication.
+
+---
 
 </details>
