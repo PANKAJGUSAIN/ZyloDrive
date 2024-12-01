@@ -10,6 +10,7 @@
   <li><code>express-validator (^7.2.0)</code>: A set of middleware for validating and sanitizing request data.</li>
   <li><code>jsonwebtoken (^9.0.2)</code>: A package to work with JSON Web Tokens (JWT).</li> 
   <li><code>mongoose (^8.8.3)</code>: A MongoDB object modeling tool designed to work in an asynchronous environment.</li>
+   <li><code>cookie-parser (^1.4.7)</code>: for parsing cookies</li>
 </ul>
 
 ## How to Run
