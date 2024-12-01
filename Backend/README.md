@@ -365,3 +365,173 @@ curl -X POST http://localhost:5000/users/profile \
 ---
 
 </details>
+
+
+<details>
+  <summary>
+    <h2> /users/logout</h2>
+  </summary>
+
+### **Feature**
+
+- **User logout** functionality via the `/users/logout` route.
+- Logs out the user by **removing the token** from the client-side cookies.
+- It also blacklists the token to ensure it cannot be used again for authentication.
+
+### **Middleware**
+
+The **authentication middleware** (`authUser`) is used to verify the token before the user is logged out. It checks if the token is blacklisted or invalid.
+
+```javascript
+module.exports.authUser = async (req, res, next) => {
+  const token = req.cookies.token || req.headers?.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    // Check if the token is blacklisted
+    const isBlacklisted = await blacklistTokenModel.findOne({ token });
+
+    if (isBlacklisted) {
+      console.log('Token is blacklisted:', isBlacklisted);  // Log the blacklisted token
+      return res.status(401).json({ message: 'Unauthorized Access!' });
+    }
+
+    // If token is valid and not blacklisted, proceed to authenticate the user
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await userModel.findById(decoded._id);
+    req.user = user;
+
+    return next();  // Proceed to the logout action
+  } catch (err) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+}
+```
+
+---
+
+### **BlacklistToken Model**
+
+The **`BlacklistToken` model** is responsible for storing blacklisted tokens in the database. These are the tokens that have been invalidated or revoked, ensuring they can no longer be used for authentication.
+
+#### **Schema Overview:**
+
+The schema for the `BlacklistToken` model includes the following fields:
+
+- **token**: A `String` that represents the blacklisted JWT token. It is marked as required and unique, ensuring that each token can only be blacklisted once.
+  
+- **createdAt**: A `Date` field that represents when the token was added to the blacklist. It has a default value of the current time (`Date.now`), and it is used to set the TTL (Time-to-Live) for the token in the collection.
+
+#### **TTL (Time-To-Live):**
+
+The `createdAt` field is indexed with a TTL of **24 hours**. This means that once a token is added to the blacklist, it will automatically be deleted from the database after 24 hours (86400 seconds).
+
+This TTL feature is enabled using MongoDB's TTL index mechanism. The benefit is that expired tokens are automatically removed from the collection, ensuring that the database does not grow unnecessarily.
+
+#### **Schema Code:**
+
+```javascript
+const mongoose = require('mongoose');
+
+// Schema for blacklisting token with TTL (Time-To-Live) of 24 hours
+const blacklistTokenSchema = new mongoose.Schema(
+  {
+    token: {
+      type: String,
+      required: true,
+      unique: true, // Ensures each token is unique in the collection
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now, // Default to current time
+    },
+  },
+  { timestamps: true }
+);
+
+// Create a TTL index to automatically delete documents after 24 hours (86400 seconds)
+blacklistTokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
+
+const blacklistTokenModel = mongoose.model('BlacklistToken', blacklistTokenSchema , 'blacklistedtokens');
+
+module.exports = blacklistTokenModel;
+```
+
+### **How It Works**
+
+1. When a user logs out, their JWT token is added to the `blacklistedtokens` collection, making it invalid for future authentication requests.
+2. The token is stored in the collection with a `createdAt` timestamp.
+3. After **24 hours**, the token is automatically deleted from the collection due to the TTL index, meaning the token will only be blacklisted for a limited period.
+
+### **Usage in Middleware**
+
+In the `/users/logout` route, the `blacklistTokenModel` is used to check if a token has been blacklisted before allowing access to the route:
+
+```javascript
+const isBlacklisted = await blacklistTokenModel.findOne({ token });
+if (isBlacklisted) {
+  return res.status(401).json({ message: 'Unauthorized Access!' });
+}
+```
+
+This ensures that a blacklisted token cannot be used for logout or future requests, adding an additional layer of security.
+
+---
+
+### **Request Method**
+
+- **GET**: `/users/logout`
+
+### **Response**
+
+#### **200 OK**
+
+Upon successful logout, the server will clear the cookie containing the token and the response will indicate the successful logout.
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+#### **Error Responses**
+
+##### **401 Unauthorized**
+
+If the token is missing, invalid, or already blacklisted:
+
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### **Testing**
+
+You can test the logout endpoint using tools like **Postman** or **CURL**.
+
+#### **Example CURL Request**
+
+```bash
+curl -X GET http://localhost:5000/users/logout \
+-H "Authorization: Bearer ${token}"
+```
+
+#### **Example CURL Request (with Cookie)**
+
+```bash
+curl -X GET http://localhost:5000/users/logout \
+--cookie "token=${token}"
+```
+
+### **Notes**
+
+- The token will be **removed from the cookies** and **blacklisted** to prevent further use.
+- If the token is missing or invalid, the user will receive a `401 Unauthorized` response.
+- Ensure that the **Authorization header** or the **cookie** is sent with the request in order to authenticate and log out the user.
+
+---
+</details>

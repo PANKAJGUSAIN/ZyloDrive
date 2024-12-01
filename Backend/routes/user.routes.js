@@ -31,9 +31,10 @@ router.post('/login',[
 ],userController.loginUser)
 
 
-//for fetching userprofile
+////for fetching userprofile
 router.post('/profile',authMiddleware.authUser , userController.getUserProfile)
 
-
+////for logout
+router.get('/logout',authMiddleware.authUser , userController.logoutUser)
 
 module.exports  = router
