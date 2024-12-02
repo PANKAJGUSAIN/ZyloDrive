@@ -1,4 +1,4 @@
-# Backend API Documentation
+[# Backend API Documentation
 ---
 ## Packages Used
    This project uses the following dependencies:
@@ -53,6 +53,142 @@
    ```bash
    npm start
    ```
+## Models
+
+<details>
+  <summary>
+    <h2> User  <a href="https://github.com/PANKAJGUSAIN/ZyloDrive/blob/main/Backend/models/user.model.js" >-></a> </h2>
+  </summary>
+
+```markdown
+# User Model - Mongoose Schema
+
+This contains a Mongoose schema and model for the `User` entity, representing a user in the application. It includes fields for the user's personal information, authentication details, and methods for password hashing, comparison, and token generation.
+
+## Features
+
+- **User Information**: Includes the user's first name, last name, email, and socket ID.
+- **Authentication**: Supports JWT-based authentication to securely sign in users and create session tokens.
+- **Password Management**: Includes methods for hashing and comparing passwords.
+- **Socket ID**: Allows for real-time communication by storing the user's socket connection ID (optional).
+
+## Schema Structure
+
+- **fullname**: Contains `firstname` (required, at least 3 characters) and `lastname` (optional, at least 3 characters).
+- **email**: A required field, must be unique, and have a minimum length of 5 characters.
+- **password**: A required field, used for authentication, and excluded from queries by default (`select: false`).
+- **socketId**: A string to store the socket connection ID for real-time communication (optional).
+
+## Methods
+
+- **generateAuthToken**: Generates a JWT token for the user with a 24-hour expiration. The token is signed using the user's `_id` and a secret key from the environment (`process.env.JWT_SECRET`).
+- **comparePassword**: Compares the provided plain text password with the hashed password stored in the database using `bcrypt`.
+- **hashPassword**: A static method that hashes a plain text password using `bcrypt` with a salt factor of 10.
+
+## Environment Variables
+
+Ensure that the following environment variable is set in your `.env` file:
+
+- `JWT_SECRET`: Secret key used to sign JWT tokens.
+
+## Dependencies
+
+- `mongoose`: ODM for MongoDB.
+- `bcrypt`: Library for hashing and comparing passwords.
+- `jsonwebtoken`: Library for generating and verifying JWT tokens.
+```
+
+</details>
+
+
+<details>
+  <summary>
+    <h2> Captain <a href="https://github.com/PANKAJGUSAIN/ZyloDrive/blob/main/Backend/models/captain.model.js" >-></a> </h2>
+  </summary>
+
+```markdown
+# Captain Model - Mongoose Schema
+
+This contains a Mongoose schema and model for the `Captain` entity, representing a captain (driver) in the application. It includes fields for the captain's personal information, vehicle details, location, and methods for authentication and password management.
+
+## Features
+
+- **Captain Information**: Includes the captain's first name, last name, email, password, and socket ID.
+- **Vehicle Information**: Captures the captain's vehicle details, such as color, plate, capacity, and vehicle type.
+- **Status**: Tracks whether the captain is active or inactive (whether they are available to take rides).
+- **Location**: Optional coordinates (latitude and longitude) to represent the captain's location.
+- **Authentication**: Supports JWT-based authentication to securely sign in captains and generate session tokens.
+- **Password Management**: Includes methods for hashing and comparing passwords.
+
+## Schema Structure
+
+- **fullname**: Contains `firstname` (required, at least 3 characters) and `lastname` (optional, at least 3 characters).
+- **email**: A required field, must be unique, and match a valid email format.
+- **password**: A required field, used for authentication, and excluded from queries by default (`select: false`).
+- **socketId**: A string to store the socket connection ID for real-time communication (optional).
+- **status**: A field to track the captain's availability, with possible values of `'active'` or `'inactive'`. Defaults to `'inactive'`.
+- **vehicle**: Contains the captain's vehicle information:
+  - `color`: Required, at least 3 characters.
+  - `plate`: Required, at least 3 characters.
+  - `capacity`: Required, must be at least 1.
+  - `vehicleType`: Required, can be one of `'car'`, `'motorcycle'`, or `'auto'`.
+- **location**: Optional coordinates for the captain’s location with `lat` and `long` fields, both of which are numbers.
+
+## Methods
+
+- **generateAuthToken**: Generates a JWT token for the captain with a 24-hour expiration. The token is signed using the captain's `_id` and a secret key from the environment (`process.env.JWT_SECRET`).
+- **comparePassword**: Compares the provided plain text password with the hashed password stored in the database using `bcrypt`.
+- **hashPassword**: A static method that hashes a plain text password using `bcrypt` with a salt factor of 10.
+
+## Environment Variables
+
+Ensure that the following environment variable is set in your `.env` file:
+
+- `JWT_SECRET`: Secret key used to sign JWT tokens.
+
+## Dependencies
+
+- `mongoose`: ODM for MongoDB.
+- `bcrypt`: Library for hashing and comparing passwords.
+- `jsonwebtoken`: Library for generating and verifying JWT tokens.
+```
+</details>
+
+<details>
+  <summary>
+    <h2>BlacklistToken <a href="https://github.com/PANKAJGUSAIN/ZyloDrive/blob/main/Backend/models/blacklistToken.model.js" >-></a></h2>
+  </summary>
+
+```markdown
+# Blacklist Token Model - Mongoose Schema
+
+This  contains a Mongoose schema and model for blacklisting JWT tokens, ensuring that invalidated or revoked tokens are automatically removed after a set period (24 hours).
+
+## Features
+
+- **Token Storage**: Stores blacklisted JWT tokens to prevent their reuse.
+- **TTL (Time-To-Live)**: Automatically deletes blacklisted tokens from the database after 24 hours.
+- **Uniqueness**: Ensures that each blacklisted token is unique in the collection.
+  
+## Schema Structure
+
+- **token**: The JWT token that has been blacklisted. This field is required and unique in the collection.
+- **createdAt**: The timestamp indicating when the token was blacklisted. This field is automatically set to the current date and time when the token is created.
+
+## TTL (Time-To-Live)
+
+- A TTL index is set on the `createdAt` field to automatically delete documents after 24 hours (86400 seconds). This ensures that blacklisted tokens are removed from the collection after 24 hours, preventing unnecessary storage of invalid tokens.
+
+## Example Use Case
+
+The `BlacklistToken` model can be used to track tokens that have been invalidated (e.g., when a user logs out or when their session is terminated). This helps ensure that a user cannot reuse a token after it has been blacklisted.
+
+## Dependencies
+
+- `mongoose`: ODM for MongoDB, used to define and interact with the MongoDB collection.
+```
+</details>
+   
 ## Api Endpoints
 <details>
   <summary>
@@ -535,3 +671,4 @@ curl -X GET http://localhost:5000/users/logout \
 
 ---
 </details>
+](url)
