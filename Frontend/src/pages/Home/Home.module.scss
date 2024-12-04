@@ -1,0 +1,54 @@
+@use '../../mixins';
+
+
+.homeContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.homeImage {
+    height: 70%;
+    width: 100%;
+    @include mixins.background-image-responsive(
+        '../../assets/homepage-pc.jpg', //default
+        '../../assets/homepage-small.jpg', //fallback
+        '../../assets/homepage-small.jpg', //small
+        '../../assets/homepage-mid.jpg'   //mid
+    );
+}
+
+.homeGetStarted {
+
+    font-size: 52px;
+    line-height: 64px;
+    font-weight: 700;
+    height: 30%;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    @include mixins.respond-to('tablet') {
+        font-size: 44px;
+        line-height: 52px;
+    }
+
+    @include mixins.respond-to('mobile') {
+        font-size: 36px;
+        line-height: 44px;
+        gap: 0;
+    }
+}

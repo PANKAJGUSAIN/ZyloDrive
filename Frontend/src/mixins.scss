@@ -1,0 +1,36 @@
+@mixin respond-to($breakpoint) {
+    @if $breakpoint =='mobile' {
+        @media (max-width: 600px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =='tablet' {
+        @media (min-width: 601px) and (max-width: 960px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =='desktop' {
+        @media (min-width: 961px) {
+            @content;
+        }
+    }
+}
+
+@mixin background-image-responsive($default-image, $fallback-image, $small-image, $medium-image) {
+    background-color: #f0f0f0;
+    /* Fallback color */
+    background-image: url($fallback-image), url($default-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include respond-to('tablet') {
+        background-image: url($fallback-image), url($medium-image);
+    }
+
+    @include respond-to('mobile') {
+        background-image: url($fallback-image), url($small-image);
+    }
+}
