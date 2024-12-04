@@ -4,7 +4,7 @@
 
 
 <details>
-    <summary open> Images Reference</summary>
+    <summary open> <h2>Images Reference</h2></summary>
     <ul>
         <li> Homepage Background Image - https://unsplash.com/photos/car-headlight-AO3VsQ_sGK8 </li>
     </ul>
