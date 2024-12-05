@@ -1,0 +1,146 @@
+@use '../../mixins.scss';
+
+.UserLoginwrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+
+  @include mixins.respond-to("tablet") {
+    padding: 15px;
+  }
+
+  @include mixins.respond-to("mobile") {
+    padding: 10px;
+  }
+}
+
+.loginForm {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.loginForm form {
+  cursor: pointer;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @include mixins.respond-to("tablet") {
+      width: 44%;
+  }
+
+  @include mixins.respond-to("mobile") {
+    width: 100%;
+  }
+}
+
+.loginForm form label{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.inputfieldContainer{
+  width: 100%;
+  cursor: pointer;
+}
+
+.inputfieldLabelContainer{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.inputfield {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 2px solid #F3F3F3;
+  background-color: #F3F3F3;
+  color: black;
+  /* Text color */
+  width: 100%;
+  font-size: 14px;
+  /* Adjust font size */
+}
+
+.inputfield:focus {
+  outline: none;
+  /* Remove default outline */
+  border: 2px solid black;
+  /* Add custom border on focus */
+  background-color: #F3F3F3;
+  /* Change background color on focus */
+}
+
+.inputfield:hover {
+  background-color: #F3F3F3;
+  /* Change background color on hover */
+}
+
+.inputfield:active {
+  background-color: #F3F3F3;
+  /* Change background color on active */
+}
+
+.inputfield:disabled {
+  background-color: #F3F3F3;
+  /* Change background color when disabled */
+  cursor: not-allowed;
+  /* Change cursor to indicate disabled state */
+}
+
+.inputfield::placeholder {
+  font-size: 14px;
+  color: #5E5E5E;
+  /* Style placeholder text */
+}
+
+
+.loginImage {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  flex-grow: 1;
+  max-height: 50%;
+}
+
+.loginSvg {
+  height: 90%;
+  width: 30%;
+
+  @include mixins.respond-to("tablet") {
+    height: 100%;
+    width: 40%;
+  }
+
+  @include mixins.respond-to("mobile") {
+    height: 100%;
+    width: 80%;
+  }
+}
+
+.UsernotAvaliable{
+  font-size: 12px;
+
+  a{
+    text-decoration: none;
+    color:lightseagreen ;
+    cursor: pointer;
+  }
+}

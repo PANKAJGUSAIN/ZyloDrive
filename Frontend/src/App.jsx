@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import './index.scss'
 import Home from "./pages/Home/Home";
-import UserLogin from "./pages/UserLogin";
+import UserLogin from "./pages/UserLogin/UserLogin";
 import UserSignup from "./pages/UserSignup";
 import Captainlogin from "./pages/CaptainLogin";
 import CaptainSignup from "./pages/CapatainSignup";

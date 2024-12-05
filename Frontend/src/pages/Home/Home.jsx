@@ -1,4 +1,4 @@
-import Button from '../../components/button';
+import Button from '../../components/button/button';
 import styles from './Home.module.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const Home = () =>{
                 Get started with ZyloDrive
             </div>
             <Button type='button' onClick={()=>navigate('/login')}>
-                Continue -
+                Continue
             </Button>
         </div>
     </div>
