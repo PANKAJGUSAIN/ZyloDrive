@@ -21,6 +21,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   flex-grow: 1;
@@ -142,5 +143,23 @@
     text-decoration: none;
     color:lightseagreen ;
     cursor: pointer;
+  }
+}
+
+
+.separatorcontent {
+  color: #AFAFAF ;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0;
+  &::after , &::before{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 15%;
+    background-color: #AFAFAF;
   }
 }

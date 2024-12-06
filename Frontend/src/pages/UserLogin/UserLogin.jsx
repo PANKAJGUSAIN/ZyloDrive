@@ -34,10 +34,15 @@ const UserLogin = () => {
                         </div>
                         <Button type="submit">Submit</Button>
                     </form>
+                        <p className={styles.separatorcontent}>or</p>
+                        <Button type="button">Log in As Captain </Button>
+                        <div style={{marginTop:'5px'}} className={styles.UsernotAvaliable}>
+                            Want to be a Captain ? <Link to="/signup" >Signup</Link>
+                        </div>
                 </div>
-                <div className={styles.loginImage}>
+                {/* <div className={styles.loginImage}>
                     <img className={styles.loginSvg} src="../../../assets/loginSvg.jpg" loading="lazy" alt="logisvg" />
-                </div>
+                </div> */}
             </div>
         </>
     )
