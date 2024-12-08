@@ -50,6 +50,17 @@ body {
     --button-text-color:#000000;
 }
 
+.logo{
+    font-family: "Playwrite HU", cursive;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:5px;
+  }
+
 
 /* Utility Classes */
 .text-center {

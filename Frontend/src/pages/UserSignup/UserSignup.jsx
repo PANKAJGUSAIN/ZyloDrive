@@ -1,11 +1,13 @@
 import styles from "../UserLogin/UserLogin.module.scss"
 import Button from "../../components/button/button"
 import { Link } from "react-router-dom"
+import LogoComponent from "../../components/LogoComponent/LogoComponent"
 
 const UserSignup = () => {
     return (
         <>
             <div className={styles.UserLoginwrapper}>
+                <LogoComponent/>
                 <div className={styles.loginForm}>
                     <form>
                         <div className={styles.inputfieldContainer}>
