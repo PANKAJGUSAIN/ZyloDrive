@@ -12,7 +12,8 @@ html,
 body {
     height: 100%;
     font-family: Arial, sans-serif;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 /* Root Element */
@@ -32,27 +33,39 @@ body {
 }
 
 //for light theme
-[data-theme="light"],:root{
+[data-theme="Light"],:root{
     --background-color: #ffffff;
     --text-color: #000000;
     --primary-color: #007bff;
     --button-background-color:#000000;
     --button-text-color:#ffffff;
-
+    --input-stalebackground-color:#F3F3F3;
+    --input-focusbackground-color:#F3F3F3;
+    --input-text-color:#000000;
+    --input-staleborder-color:#F3F3F3;
+    --input-focusborder-color:#000000;
 }
 
 //for dark theme
-[data-theme="dark"] {
+[data-theme="Dark"] {
     --background-color: #000000;
     --text-color: #ffffff;
     --primary-color: #1e90ff;
-    --button-background-color:#ffffff;
-    --button-text-color:#000000;
+    --button-background-color:#1e1e1e;
+    --button-text-color:#ffffff;
+    --input-text-color:#ffffff;
+    --input-stalebackground-color:#1e1e1e;
+    --input-focusbackground-color:#1e1e1e;
+    --input-staleborder-color:#4e4e4e;
+    --input-focusborder-color:#353535;
 }
 
 .logo{
     font-family: "Playwrite HU", cursive;
     font-optical-sizing: auto;
+    color: var(--text-color);
+    fill: var(--text-color);
+    stroke: var(--text-color);
     font-weight: 500;
     font-style: normal;
     display: flex;

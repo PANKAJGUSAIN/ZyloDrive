@@ -69,9 +69,9 @@
   margin: 10px 0;
   border-radius: 8px;
   text-decoration: none;
-  border: 2px solid #F3F3F3;
-  background-color: #F3F3F3;
-  color: black;
+  border: 2px solid var(--input-staleborder-color);
+  background-color: var(--input-stalebackground-color);
+  color: var(--input-text-color);
   /* Text color */
   width: 100%;
   font-size: 14px;
@@ -81,24 +81,24 @@
 .inputfield:focus {
   outline: none;
   /* Remove default outline */
-  border: 2px solid black;
+  border: 2px solid var(--input-focusborder-color);
   /* Add custom border on focus */
-  background-color: #F3F3F3;
+  background-color: var(--input-focusbackground-color);
   /* Change background color on focus */
 }
 
 .inputfield:hover {
-  background-color: #F3F3F3;
+  background-color:  var(--input-stalebackground-color);
   /* Change background color on hover */
 }
 
 .inputfield:active {
-  background-color: #F3F3F3;
+  background-color: var(--input-stalebackground-color);
   /* Change background color on active */
 }
 
 .inputfield:disabled {
-  background-color: #F3F3F3;
+  background-color:  var(--input-stalebackground-color);
   /* Change background color when disabled */
   cursor: not-allowed;
   /* Change cursor to indicate disabled state */
