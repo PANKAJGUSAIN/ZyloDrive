@@ -51,14 +51,14 @@ const UserSignup = () => {
                             </label>
                         </div>
                         <div className={styles.UsernotAvaliable}>
-                            Have a account ? <Link to="/login" >Login</Link>
+                            Have an account ? <Link to="/login" >Login</Link>
                         </div>
                         <Button type="submit">Submit</Button>
                     </form>
                 </div>
-                <div className={styles.loginImage}>
+                {/* <div className={styles.loginImage}>
                     <img className={styles.loginSvg} src="../../../assets/Signup.jpg" loading="lazy" alt="logisvg" />
-                </div>
+                </div> */}
             </div>
         </>
     )

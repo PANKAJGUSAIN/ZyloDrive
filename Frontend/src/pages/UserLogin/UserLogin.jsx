@@ -32,7 +32,7 @@ const UserLogin = () => {
                             </label>
                         </div>
                         <div className={styles.UsernotAvaliable}>
-                            Don't have a account ? <Link to="/signup" >Signup</Link>
+                            Don't have an account ? <Link to="/signup" >Signup</Link>
                         </div>
                         <Button type="submit">Submit</Button>
                     </form>
