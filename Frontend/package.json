@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
+  "homepage": "https://pankajgusain.github.io/ZyloDrive",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,6 +23,7 @@
     "css-loader": "^6.11.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "cssnano": "^7.0.6",
+    "gh-pages": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.1",
     "postcss": "^8.4.47",
@@ -35,6 +37,8 @@
     "webpack-dev-server": "^5.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
