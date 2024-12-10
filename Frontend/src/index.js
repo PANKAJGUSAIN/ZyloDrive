@@ -7,7 +7,7 @@ import { ThemeProvider } from './Context/ThemeContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/ZyloDrive">
             <ThemeProvider>
                 <App />
             </ThemeProvider>
