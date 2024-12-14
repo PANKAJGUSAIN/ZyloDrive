@@ -1,4 +1,4 @@
-# Frontend Documentation 
+# Frontend Documentation   
 <details>
     <summary><h2>Project setup</h2></summary>
     
