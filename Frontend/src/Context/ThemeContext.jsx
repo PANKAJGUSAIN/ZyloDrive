@@ -18,7 +18,7 @@ const ThemeProvider = ({ children }) => {
         if (userPrefersDark) {
             return 'Dark'; // If the system prefers dark mode
         } else {
-            return 'Dark'; // If the system prefers light mode or no preference is set
+            return 'Light'; // If the system prefers light mode or no preference is set
         }
     };
 
