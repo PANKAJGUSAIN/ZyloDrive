@@ -22,3 +22,7 @@
     font-size: var(--button-fontSize);
     font-weight: var(--button-text-fontweight);
 }
+
+.customButton:disabled{
+    cursor: not-allowed;
+}
