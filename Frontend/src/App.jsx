@@ -3,8 +3,8 @@ import './index.scss'
 import Home from "./pages/Home/Home";
 import UserLogin from "./pages/UserLogin/UserLogin";
 import UserSignup from "./pages/UserSignup/UserSignup";
-import Captainlogin from "./pages/CaptainLogin";
-import CaptainSignup from "./pages/CapatainSignup";
+import Captainlogin from "./pages/CaptainLogin/CaptainLogin";
+import CaptainSignup from "./pages/CaptainSignup/CapatainSignup";
 
 const App = () =>{
     return (

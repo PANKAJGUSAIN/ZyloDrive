@@ -1,11 +1,11 @@
-import styles from "./UserLogin.module.scss"
+import styles from "../UserLogin/UserLogin.module.scss"
 import Button from "../../components/button/button"
 import { Link, useNavigate } from "react-router-dom"
 import LogoComponent from "../../components/LogoComponent/LogoComponent"
 import { useEffect, useState } from "react"
 
 
-const UserLogin = () => {
+const CaptainLogin = () => {
 
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState('');
@@ -91,14 +91,14 @@ const UserLogin = () => {
                             {error && error.password && <div className={styles.inputfielderror}>{error.password}</div>}
                         </div>
                         <div className={styles.UsernotAvaliable}>
-                            Don't have an account ? <Link to="/signup" >Signup</Link>
+                            Don't have an account ? <Link to="/captain-signup" >Signup</Link>
                         </div>
                         <Button type="submit">Submit</Button>
                     </form>
                     <p className={styles.separatorcontent}>or</p>
-                    <Button style={{backgroundColor:"#59463B"}} type="button" onClick={()=>{navigate("/captain-login")}}>Log in As Captain </Button>
-                    <div style={{ marginTop: '8px' }} className={styles.UsernotAvaliable}>
-                        Want to be a Captain ? <Link to="/signup" >Signup</Link>
+                    <Button type="button" onClick={()=>{navigate("/login")}}>Log in As User </Button>
+                    <div style={{ marginTop: '5px' }} className={styles.UsernotAvaliable}>
+                        Create an user Account ? <Link to="/signup" >Signup</Link>
                     </div>
                 </div>
                 {/* <div className={styles.loginImage}>
@@ -109,4 +109,4 @@ const UserLogin = () => {
     )
 }
 
-export default UserLogin
+export default CaptainLogin
