@@ -1,67 +1,166 @@
-import styles from "../UserLogin/UserLogin.module.scss"
-import Button from "../../components/button/button"
-import { Link } from "react-router-dom"
-import LogoComponent from "../../components/LogoComponent/LogoComponent"
+import styles from "../UserLogin/UserLogin.module.scss";
+import Button from "../../components/button/button";
+import { Link } from "react-router-dom";
+import LogoComponent from "../../components/LogoComponent/LogoComponent";
+import { useState } from "react";
 
 const UserSignup = () => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState({});
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePassword = (password) => {
+        return password.length >= 6;
+    };
+
+    const validateName = (name) => {
+        const re = /^[a-zA-Z\s]+$/;
+        return re.test(name);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let errors = {};
+
+        if (!firstName) {
+            errors.firstName = "First name is required";
+        }else if (!validateName(firstName)) {
+            errors.firstName = "First name cannot contain special characters";
+        }else if (firstName.length > 40) {
+            errors.firstName = "First name cannot be more than 40 characters";
+        }
+
+        if (lastName.length > 0 ) {
+            if (!validateName(lastName)) {
+                errors.lastName = "Last name cannot contain special characters";
+            }
+        }else if (lastName > 40) {
+            errors.lastName = "Last name cannot be more than 40 characters";
+        }
+
+        if (!email) {
+            errors.email = "Email is required";
+        } else if (!validateEmail(email)) {
+            errors.email = "Invalid Email";
+        } else if (email.length > 100) {
+            errors.email = "email cannot be more than 40 characters";
+        }
+
+        if (!password) {
+            errors.password = "Password is required";
+        } else if (!validatePassword(password)) {
+            errors.password = "Password must be at least 6 characters";
+        }
+
+        setError(errors);
+
+        if (Object.keys(errors).length === 0) {
+            console.log(firstName, lastName, email, password);
+            // Proceed with form submission
+        }
+    };
+
     return (
         <>
             <div className={styles.UserLoginwrapper}>
-                <LogoComponent/>
+                <LogoComponent />
                 <div className={styles.loginForm}>
-                    <form>
+                    <form onSubmit={handleSubmit} noValidate>
                         <div className={styles.inputfieldContainer}>
-                            <label for="zyloDriverUserFirstName">
+                            <label htmlFor="zyloDriverFirstName">
                                 <div className={styles.inputfieldLabelContainer}>
-                                    <div>
-                                        <h3> First name  </h3>
+                                    <div title="required field">
+                                        <h3>First Name <sup style={{color:"red"}}>*</sup></h3>
                                     </div>
                                 </div>
-                                <input id="zyloDriverUserFirstName" className={styles.inputfield} type="text" required />
+                                <input
+                                    id="zyloDriverFirstName"
+                                    className={styles.inputfield}
+                                    style={error.firstName ? { border: "2px solid red" } : {}}
+                                    type="text"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    required
+                                    placeholder="First Name"
+                                />
                             </label>
+                            {error.firstName && <div className={styles.inputfielderror}>{error.firstName}</div>}
                         </div>
                         <div className={styles.inputfieldContainer}>
-                            <label for="zyloDriverUserLastName">
+                            <label htmlFor="zyloDriverLastName">
                                 <div className={styles.inputfieldLabelContainer}>
                                     <div>
-                                        <h3> Last name </h3>
+                                        <h3>Last Name</h3>
                                     </div>
                                 </div>
-                                <input id="zyloDriverUserLastName" className={styles.inputfield} type="text" />
+                                <input
+                                    id="zyloDriverLastName"
+                                    className={styles.inputfield}
+                                    style={error.lastName ? { border: "2px solid red" } : {}}
+                                    type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    required
+                                    placeholder="Last Name"
+                                />
                             </label>
+                            {error.lastName && <div className={styles.inputfielderror}>{error.lastName}</div>}
                         </div>
                         <div className={styles.inputfieldContainer}>
-                            <label for="zyloDriverUserLogin">
+                            <label htmlFor="zyloDriverUserEmail">
                                 <div className={styles.inputfieldLabelContainer}>
                                     <div>
-                                        <h3> Email </h3>
+                                        <h3 title="required field" >Email id <sup style={{color:"red"}}>*</sup></h3>
                                     </div>
                                 </div>
-                                <input id="zyloDriverUserLogin" className={styles.inputfield} type="email" required placeholder="email@example.com" />
+                                <input
+                                    id="zyloDriverUserEmail"
+                                    className={styles.inputfield}
+                                    style={error.email ? { border: "2px solid red" } : {}}
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    placeholder="email@example.com"
+                                />
                             </label>
+                            {error.email && <div className={styles.inputfielderror}>{error.email}</div>}
                         </div>
                         <div className={styles.inputfieldContainer}>
-                            <label for="zyloDriverUserPassword">
+                            <label htmlFor="zyloDriverUserPassword">
                                 <div className={styles.inputfieldLabelContainer}>
                                     <div>
-                                        <h3>Password</h3>
+                                        <h3 title="required field" >Enter Password <sup  style={{color:"red"}}>*</sup> </h3>
                                     </div>
                                 </div>
-                                <input id="zyloDriverUserPassword" className={styles.inputfield} type="password" required />
+                                <input
+                                    id="zyloDriverUserPassword"
+                                    className={styles.inputfield}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    style={error.password ? { border: "2px solid red" } : {}}
+                                    type="password"
+                                    required
+                                />
                             </label>
+                            {error.password && <div className={styles.inputfielderror}>{error.password}</div>}
                         </div>
                         <div className={styles.UsernotAvaliable}>
-                            Have an account ? <Link to="/login" >Login</Link>
+                            Already have an account? <Link to="/login">Login</Link>
                         </div>
                         <Button type="submit">Submit</Button>
                     </form>
                 </div>
-                {/* <div className={styles.loginImage}>
-                    <img className={styles.loginSvg} src="../../../assets/Signup.jpg" loading="lazy" alt="logisvg" />
-                </div> */}
             </div>
         </>
-    )
-}
+    );
+};
 
-export default UserSignup
+export default UserSignup;

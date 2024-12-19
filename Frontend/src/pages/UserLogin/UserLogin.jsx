@@ -25,50 +25,29 @@ const UserLogin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let errors = {};
+
         if (userEmail.length <= 0) {
-            setError(prev => (
-                {
-                    ...prev,
-                    "email": "Email is required"
-                }
-            ))
-        }
+            errors.email = "Email is required";
+        } else if (userEmail.length > 100) {
+            errors.email = "Email cannot be more than 100 characters";
+        } else if (!validateEmail(userEmail)) {
+            errors.email = "Invalid Email";
+        } 
+        
         if (userPassword.length <= 0) {
-            setError(prev => (
-                {
-                    ...prev,
-                    "password": "Password is required"
-                }
-            ))
-        }
-        if (userEmail.length > 0) {
-            if (validateEmail(userEmail)) {
-                setError(prev => {
-                    const { email, ...rest } = prev;
-                    return rest;
-                });
-            } else {
-                setError(prev => ({
-                    ...prev,
-                    email: "Invalid Email"
-                }));
-            }
-        }
-        if (userPassword.length > 0) {
-            if (validatePassword(userPassword)) {
-                setError(prev => {
-                    const { password, ...rest } = prev;
-                    return rest;
-                });
-            } else {
-                setError(prev => ({
-                    ...prev,
-                    password: "Password must be at least 6 characters"
-                }));
-            }
+            errors.password = "Password is required";
+        } else if (!validatePassword(userPassword)) {
+            errors.password = "Password must be at least 6 characters";
         }
 
-    }
+        setError(errors);
+
+        if (Object.keys(errors).length === 0) {
+            console.log(userEmail, userPassword);
+            // Proceed with form submission
+        }
+    };
 
     return (
         <>
@@ -80,7 +59,7 @@ const UserLogin = () => {
                             <label for="zyloDriverUserLogin">
                                 <div className={styles.inputfieldLabelContainer}>
                                     <div>
-                                        <h3> What's your email ?</h3>
+                                        <h3> What's your email ? </h3>
                                     </div>
                                 </div>
                                 <input id="zyloDriverUserLogin"
