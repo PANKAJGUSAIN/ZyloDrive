@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
-const UserLogout = () =>{
+const CaptainLogout = () =>{
 
     const navigate = useNavigate();
     useEffect(()=>{
@@ -35,4 +35,4 @@ const UserLogout = () =>{
     )
 }
 
-export default UserLogout
+export default CaptainLogout
