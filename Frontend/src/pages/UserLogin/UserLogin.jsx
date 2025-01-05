@@ -2,7 +2,9 @@ import styles from "./UserLogin.module.scss"
 import Button from "../../components/button/button"
 import { Link, useNavigate } from "react-router-dom"
 import LogoComponent from "../../components/LogoComponent/LogoComponent"
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../../Context/UserContext"
+import axios from "axios"
 
 
 const UserLogin = () => {
@@ -11,6 +13,8 @@ const UserLogin = () => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const { changeData } = useContext(UserContext);
 
 
     const validateEmail = (email) => {
@@ -34,8 +38,8 @@ const UserLogin = () => {
             errors.email = "Email cannot be more than 100 characters";
         } else if (!validateEmail(userEmail)) {
             errors.email = "Invalid Email";
-        } 
-        
+        }
+
         if (userPassword.length <= 0) {
             errors.password = "Password is required";
         } else if (!validatePassword(userPassword)) {
@@ -47,6 +51,29 @@ const UserLogin = () => {
         if (Object.keys(errors).length === 0) {
             console.log(userEmail, userPassword);
             // Proceed with form submission
+            const data = { email: userEmail, password: userPassword };
+            setLoading(true);
+            axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data)
+                .then(response => response.data)
+                .then(data => {
+                    console.log(data);
+                    changeData({ email:data.user.email ,
+                             fullname :{ 
+                                firstname : data.user.fullname.firstname ,
+                                lastname : data.user.fullname.lastname 
+                            } 
+                    });
+                    navigate('/home');
+                })
+                .catch(error => {
+                    if (error.status === 400) {
+                        alert(error.response.data.message);
+                    }
+                    console.log("error", error);
+                })
+                .finally(() => {
+                    setLoading(false);
+                })
         }
     };
 
@@ -93,10 +120,10 @@ const UserLogin = () => {
                         <div className={styles.UsernotAvaliable}>
                             Don't have an account ? <Link to="/signup" >Signup</Link>
                         </div>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" disabled={loading}>{ loading ?  "Submitting..." : "Submit" }</Button>
                     </form>
                     <p className={styles.separatorcontent}>or</p>
-                    <Button style={{backgroundColor:"#59463B"}} type="button" onClick={()=>{navigate("/captain-login")}}>Log in As Captain </Button>
+                    <Button style={{ backgroundColor: "#59463B" }} type="button" onClick={() => { navigate("/captain-login") }}>Log in As Captain </Button>
                     <div style={{ marginTop: '8px' }} className={styles.UsernotAvaliable}>
                         Want to be a Captain ? <Link to="/signup" >Signup</Link>
                     </div>

@@ -60,7 +60,7 @@ const CaptainLogin = () => {
                             <label for="zyloDriverUserLogin">
                                 <div className={styles.inputfieldLabelContainer}>
                                     <div>
-                                        <h3> What's your email ? </h3>
+                                        <h3> What's our Captain's email ? </h3>
                                     </div>
                                 </div>
                                 <input id="zyloDriverUserLogin"

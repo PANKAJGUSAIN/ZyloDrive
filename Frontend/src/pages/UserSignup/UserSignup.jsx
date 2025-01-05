@@ -1,15 +1,20 @@
 import styles from "../UserLogin/UserLogin.module.scss";
 import Button from "../../components/button/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoComponent from "../../components/LogoComponent/LogoComponent";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import axios from 'axios';
+import { UserContext } from "../../Context/UserContext";
 
 const UserSignup = () => {
+    const { changeData } = useContext(UserContext);
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState({});
+    const [loading , setloading] = useState(false);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,7 +30,7 @@ const UserSignup = () => {
         return re.test(name);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         let errors = {};
 
@@ -62,8 +67,35 @@ const UserSignup = () => {
         setError(errors);
 
         if (Object.keys(errors).length === 0) {
+            setloading(true);
             console.log(firstName, lastName, email, password);
             // Proceed with form submission
+
+            const data = {
+                "fullname":{
+                    "firstname":firstName,
+                    "lastname":lastName,
+                },
+                "email":email,
+                "password":password
+                }
+
+            // API call to register user
+            axios.post(`${process.env.REACT_APP_API_URL}/users/register` , data)
+            .then(response => {
+                console.log("response" , response);
+                delete data.password;
+                changeData(data);
+                setloading(false);
+                navigate('/home');
+            })
+            .catch((error)=>{
+                if(error.status === 400){
+                    alert(error.response.data.message);
+                }
+                console.log("error" , error);
+                setloading(false);
+            })
         }
     };
 
@@ -155,7 +187,7 @@ const UserSignup = () => {
                         <div className={styles.UsernotAvaliable}>
                             Already have an account? <Link to="/login">Login</Link>
                         </div>
-                        <Button type="submit">Submit</Button>
+                        <Button type="submit" disabled={loading}>{ loading ?  "Creating Account..." : "Create Account" }</Button>
                     </form>
                 </div>
             </div>
