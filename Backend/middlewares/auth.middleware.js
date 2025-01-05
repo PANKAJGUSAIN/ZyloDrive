@@ -20,6 +20,9 @@ module.exports.authUser = async(req,res,next) =>{
     try{
         const decode = jwt.verify(token , process.env.JWT_SECRET);
         const user = await userModel.findById(decode._id);
+        if(!user){
+            return res.status(401).json({message:'No matching user found'})
+        }
         req.user = user;
         return next();
     }
@@ -44,6 +47,9 @@ module.exports.authCaptain = async(req,res,next) =>{
     try{
         const decode = jwt.verify(token , process.env.JWT_SECRET);
         const captain = await captainModel.findById(decode._id);
+        if(!captain){
+            return res.status(401).json({message:'No matching user found'})
+        }
         req.captain = captain;
         return next();
     }
