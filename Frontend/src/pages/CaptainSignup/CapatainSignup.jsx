@@ -8,7 +8,7 @@ import { CaptainContext } from "../../Context/CaptainContext";
 
 const CaptainSignup = () => {
 
-    const { changeData } = useContext(CaptainContext);
+    const { changeCaptainData } = useContext(CaptainContext);
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -147,7 +147,7 @@ const CaptainSignup = () => {
                 .then(response => {
                     console.log("response", response);
                     delete data.password;
-                    changeData(data);
+                    changeCaptainData(data);
                     setloading(false);
                     sessionStorage.setItem('zylotoken', response.data.token);
                     navigate('/home');

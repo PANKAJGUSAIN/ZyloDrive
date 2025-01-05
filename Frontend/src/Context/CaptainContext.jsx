@@ -5,14 +5,14 @@ const CaptainContext = createContext();
 
 const CaptainProvider = ({ children })=>{
 
-    const [data , setData] = useState({});
+    const [captaindata , setcaptaidata] = useState({});
     
-    const changeData = (newData) => {
-        console.log("newData" , newData);
-        setData(newData);
+    const changeCaptainData = (newData) => {
+        console.log("CaptainData" , newData);
+        setcaptaidata(newData);
     }
     return (
-        <CaptainContext.Provider value={{ data , changeData }}>
+        <CaptainContext.Provider value={{ captaindata , changeCaptainData }}>
             {children}
         </CaptainContext.Provider>
     )

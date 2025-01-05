@@ -2,12 +2,13 @@ import styles from "../UserLogin/UserLogin.module.scss"
 import Button from "../../components/button/button"
 import { Link, useNavigate } from "react-router-dom"
 import LogoComponent from "../../components/LogoComponent/LogoComponent"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
+import { CaptainContext } from "../../Context/CaptainContext"
 
 
 const CaptainLogin = () => {
-
+    const { changeCaptainData } = useContext(CaptainContext);
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
@@ -55,16 +56,14 @@ const CaptainLogin = () => {
                 .then(response => response.data)
                 .then(data => {
                     console.log(data);
-                    changeData({
+                    changeCaptainData({
                         token: data.token,
-                        email: data.user.email,
-                        fullname: {
-                            firstname: data.user.fullname.firstname,
-                            lastname: data.user.fullname.lastname
-                        }
+                        email: data.captain.email,
+                        fullname : data.captain.fullname , 
+                        vehicle : data.captain.vehicle,
                     });
                     sessionStorage.setItem('zylotoken', data.token);
-                    navigate('/home');
+                    navigate('/captain-home');
                 })
                 .catch(error => {
                     if (error.status === 400) {
@@ -73,7 +72,6 @@ const CaptainLogin = () => {
                     console.log("error", error);
                 })
                 .finally(() => {
-                    navigate('/home');
                     setLoading(false);
                 })
         }
