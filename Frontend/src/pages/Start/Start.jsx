@@ -4,7 +4,7 @@ import styles from './Home.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../../Context/ThemeContext';
 
-const Home = () =>{
+const Start = () =>{
     const navigate = useNavigate();
     const {currentTheme, changeTheme, AvaliableThemes} = useContext(ThemeContext);
     return(
@@ -23,5 +23,5 @@ const Home = () =>{
     )
 }
 
-export default Home
+export default Start
 

@@ -7,6 +7,8 @@
   "license": "ISC",
   "homepage": "https://pankajgusain.github.io/ZyloDrive",
   "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2"
