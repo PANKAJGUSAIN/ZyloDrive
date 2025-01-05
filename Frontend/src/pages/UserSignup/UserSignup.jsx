@@ -87,6 +87,7 @@ const UserSignup = () => {
                 delete data.password;
                 changeData(data);
                 setloading(false);
+                sessionStorage.setItem('zylotoken', response.data.token);
                 navigate('/home');
             })
             .catch((error)=>{

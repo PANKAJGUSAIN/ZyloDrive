@@ -5,6 +5,8 @@ import UserLogin from "./pages/UserLogin/UserLogin";
 import UserSignup from "./pages/UserSignup/UserSignup";
 import Captainlogin from "./pages/CaptainLogin/CaptainLogin";
 import CaptainSignup from "./pages/CaptainSignup/CapatainSignup";
+import UserProtectedWrapper from "./pages/UserProtectedWrapper/UserProtectedWrapper";
+import UserLogout from "./pages/UserLogout/UserLogout";
 
 const App = () =>{
     return (
@@ -15,7 +17,8 @@ const App = () =>{
                 <Route path='/signup' element={<UserSignup/>}/>
                 <Route path='/captain-login' element={<Captainlogin/>}/>
                 <Route path='/captain-signup' element={<CaptainSignup/>}/>
-                <Route path="/home" element={<>Hello</>}/>
+                <Route path="/home" element={<UserProtectedWrapper><>Hello</></UserProtectedWrapper>}/>
+                <Route path="/users/logout" element={<UserProtectedWrapper><UserLogout/></UserProtectedWrapper>}/>
             </Routes>
         </>
     )

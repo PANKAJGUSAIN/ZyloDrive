@@ -57,12 +57,15 @@ const UserLogin = () => {
                 .then(response => response.data)
                 .then(data => {
                     console.log(data);
-                    changeData({ email:data.user.email ,
+                    changeData({ 
+                        token : data.token ,
+                        email:data.user.email ,
                              fullname :{ 
                                 firstname : data.user.fullname.firstname ,
                                 lastname : data.user.fullname.lastname 
                             } 
                     });
+                    sessionStorage.setItem('zylotoken', data.token);
                     navigate('/home');
                 })
                 .catch(error => {
