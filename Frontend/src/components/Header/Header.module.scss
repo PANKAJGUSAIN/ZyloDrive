@@ -1,0 +1,26 @@
+@use '../../mixins.scss';
+
+
+.zyloDriveheader{
+    width: 100%;
+    height: auto;
+    padding:5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    backdrop-filter: blur(100%);
+}
+.userIcon{
+    width: auto;
+    height: auto;
+    padding: 10px;
+    background-color: var(--background-color);
+    border-radius: 50%;
+    transform: scale(0.7);
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+    &:hover{
+        transform: scale(0.9);
+    }
+}

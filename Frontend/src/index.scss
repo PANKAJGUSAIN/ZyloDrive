@@ -11,9 +11,12 @@
 html,
 body {
     height: 100%;
+    width: 100%;
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
+    scroll-behavior: smooth;
+    transition: all 0.5s ease-out;
 }
 
 /* Root Element */

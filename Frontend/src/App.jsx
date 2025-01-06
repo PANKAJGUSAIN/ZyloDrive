@@ -12,6 +12,7 @@ const UserLogout = lazy(() => import('./pages/UserLogout/UserLogout'));
 const CaptainLogout = lazy(() => import('./pages/CaptainLogout/CaptainLogout'));
 const UserProtectedWrapper = lazy(() => import('./pages/UserProtectedWrapper/UserProtectedWrapper'));
 const CaptainProtectedWrapper = lazy(() => import('./pages/CaptainProtectedWrapper/CaptainProtectedWrapper'));
+const UserHome = lazy(() => import('./pages/UserHome/UserHome'));
 
 const App = () => {
     return (
@@ -22,7 +23,7 @@ const App = () => {
                 <Route element={<UserProtectedWrapper />}>
                     <Route path='/login' element={<UserLogin />} />
                     <Route path='/signup' element={<UserSignup />} />
-                    <Route path='/home' element={<div>Hello User</div>} />
+                    <Route path='/home' element={<UserHome/>} />
                     <Route path='/users/logout' element={<UserLogout />} />
                 </Route>
                 <Route element={<CaptainProtectedWrapper />}>
