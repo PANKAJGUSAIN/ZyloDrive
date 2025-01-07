@@ -38,6 +38,8 @@ body {
 //for light theme
 [data-theme="Light"],:root{
     --background-color: #ffffff;
+    --user-background-color-icon:#000000 ; 
+    --user-sideNavigation-card-color:ghostwhite;
     --text-color: #000000;
     --primary-color: #007bff;
     --button-background-color:#000000;
@@ -52,6 +54,8 @@ body {
 //for dark theme
 [data-theme="Dark"] {
     --background-color: #000000;
+    --user-background-color-icon:#ffffff ;
+    --user-sideNavigation-card-color:#111111;
     --text-color: #ffffff;
     --primary-color: #1e90ff;
     --button-background-color:#1e1e1e;

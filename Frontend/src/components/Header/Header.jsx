@@ -13,7 +13,7 @@ const ZyloDriveHeader = () => {
                 <p>ZyloDrive</p>
             </div>
             <div className={styles.userIcon}>            
-                <FontAwesomeIcon icon={faUser} style={{ color: 'var(--text-color)' }} size="lg"/>
+                <FontAwesomeIcon icon={faUser} style={{ color: 'var(--background-color)' }} size="lg"/>
             </div>
         </div>
     )

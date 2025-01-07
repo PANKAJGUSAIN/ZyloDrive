@@ -8,14 +8,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    background-color: var(--background-color);
     backdrop-filter: blur(100%);
 }
 .userIcon{
     width: auto;
     height: auto;
     padding: 10px;
-    background-color: var(--background-color);
+    background-color: var(--user-background-color-icon);
     border-radius: 50%;
     transform: scale(0.7);
     cursor: pointer;

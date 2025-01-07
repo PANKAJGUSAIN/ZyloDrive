@@ -1,0 +1,93 @@
+@use '../../mixins.scss';
+
+.UserHomeWrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.UserMainWrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    @include mixins.respond-to('tablet') {
+        flex-direction: column;
+    }
+    @include mixins.respond-to('mobile') {
+        flex-direction: column;
+    }
+}
+
+.UserMapWrapper{
+    width: 60%;
+    background-color: aqua;
+    height: 100%;
+    @include mixins.respond-to('tablet') {
+        width: 100%;
+    }
+    @include mixins.respond-to('mobile') {
+        width: 100%;
+    }
+
+}
+
+.UserLocationWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    background-color: var(--user-sideNavigation-card-color);
+    height: 100%;
+    transition: width 0.5s ease-out;
+    padding: 10px;
+    overflow: auto;
+
+    @include mixins.respond-to('desktop') {
+        &:hover{
+            width: 45%;
+        }
+    }
+
+    @include mixins.respond-to('tablet') {
+        height: 50%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        transition: bottom ,  height 0.5s ease-out;
+        // &:hover{
+        //     bottom: 0;
+        //     height: 90%;
+        // }
+    }
+    @include mixins.respond-to('mobile') {
+        height: 50%;
+        position: absolute;
+        bottom: -20%;
+        width: 100%;
+        transition: bottom , height 0.5s ease-out;
+        // &:hover{
+        //     bottom: 0;
+        //     height: 90%;
+        // }
+    }
+}
+
+.locationsearchwrapper{
+    display: none;
+    
+}
+
+.UserHomeDownArrow{
+    display: none;
+}
+
+.UserMapList{
+        height: auto;
+        margin: 10px 0;
+        flex-grow: 1;
+        background-color: orange;
+        width: 100%;
+}
