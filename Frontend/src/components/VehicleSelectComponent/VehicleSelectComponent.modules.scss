@@ -1,0 +1,50 @@
+.vehicleSelectComponentWrapper{
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+}
+
+.vehicleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    border: 2px solid #222222;
+    line-height: 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:hover{
+        border: 2px solid grey;
+    }
+}
+
+.vehicleImage {
+    width: 6rem;
+    height: 4rem;
+}
+
+.vehicleDetails {
+    display: flex;
+    font-size: 16px;
+    gap: 5px;
+}
+
+.vehicleTime {
+    display: flex;
+    font-size: 14px;
+    gap: 5px;
+}
+.vehicleStyle{
+    display: flex;
+    font-size: 14px;
+    gap: 5px;
+}
+
+.vehiclePrice {
+    font-size: 14px;
+}

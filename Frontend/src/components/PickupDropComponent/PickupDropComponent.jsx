@@ -3,13 +3,63 @@ import LocationSearchPanel from "../LocationSearchPanel/LocationSearchPanel"
 import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons"
 import styles from "../../pages/UserHome/UserHome.module.scss"
 import inputstyles from '../../pages/UserLogin/UserLogin.module.scss'
-import { forwardRef, useState } from "react"
+import { forwardRef, useEffect, useRef, useState } from "react"
 
-const PickupDropComponent = forwardRef(({ handleDownMovement, handleClick }, ref) => {
+const PickupDropComponent = forwardRef(({ }, ref) => {
 
     const [pickup, setPickup] = useState('');
     const [destination, setDestination] = useState('');
-    const [downArrowRef , pickupRef , dropRef , locationContainerref] = ref ;
+    const [userWrapperRef] = ref;
+    const downArrowRef = useRef(null);
+    const pickupRef = useRef(null);
+    const dropRef = useRef(null);
+    const locationContainerref = useRef(null);
+
+
+    const resetcss = () => {
+        if (window.innerWidth > 961) {
+            userWrapperRef.current.style.bottom = "";
+            userWrapperRef.current.style.height = "";
+            downArrowRef.current.style.display = "";
+            locationContainerref.current.style.display = "";
+        }
+    }
+    const handleClick = () => {
+        if (window.innerWidth < 961) {
+            if (userWrapperRef.current) {
+                userWrapperRef.current.style.bottom = "0";
+                userWrapperRef.current.style.height = "100%";
+                downArrowRef.current.style.display = "block";
+                locationContainerref.current.style.display = "block";
+                userWrapperRef.current.scrollIntoView({ behavior: 'smooth' }); // Scroll container into view
+            }
+        }
+        else {
+            if (userWrapperRef.current) {
+                userWrapperRef.current.style.bottom = "";
+                userWrapperRef.current.style.height = "";
+                downArrowRef.current.style.display = "";
+                locationContainerref.current.style.display = "block";
+            }
+        }
+    }
+    const handleDownMovement = () => {
+        if (window.innerWidth < 961) {
+            if (userWrapperRef.current) {
+                userWrapperRef.current.style.bottom = "";
+                userWrapperRef.current.style.height = "";
+                downArrowRef.current.style.display = "";
+                locationContainerref.current.style.display = "none";
+            }
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', resetcss);
+        return () => {
+            window.removeEventListener('resize', resetcss);
+        };
+    }, []);
 
     return (
         <>
