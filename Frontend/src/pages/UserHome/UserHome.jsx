@@ -1,11 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import ZyloDriveHeader from "../../components/Header/Header";
 import styles from "./UserHome.module.scss";
-import inputstyles from "../UserLogin/UserLogin.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons";
-import LocationSearchPanel from "../../components/LocationSearchPanel/LocationSearchPanel";
+import PickupDropComponent from "../../components/PickupDropComponent/PickupDropComponent";
 
 
 const UserHome = () => {
@@ -15,8 +12,6 @@ const UserHome = () => {
     const pickupRef = useRef(null);
     const dropRef = useRef(null);
     const locationContainerref = useRef(null);
-    const [pickup, setPickup] = useState('');
-    const [destination, setDestination] = useState('');
 
 
     const resetcss = () => {
@@ -74,43 +69,11 @@ const UserHome = () => {
                     <h1>Welcome to User Home</h1>
                 </div>
                 <div ref={userWrapperRef} className={styles.UserLocationWrapper}>
-                    <div style={{ display: 'flex', justifyContent: "space-between", alignItems: "center", padding: "0 10px" }}>
-                        <h4>Find a trip</h4>
-                        <div onClick={handleDownMovement} className={styles.UserHomeDownArrow} ref={downArrowRef}>
-                            <FontAwesomeIcon icon={faArrowAltCircleDown} style={{ color: "var(--textcolor)" }} />
-                        </div>
-                    </div>
-                    <form noValidate>
-                        <div className={inputstyles.inputfieldContainer}>
-                            <label htmlFor="zyloDriverPickuplocation">
-                                <input id="zyloDriverPickuplocation"
-                                    ref={pickupRef}
-                                    onClick={() => handleClick(pickupRef)}
-                                    className={inputstyles.inputfield}
-                                    value={pickup}
-                                    onChange={(e) => setPickup(e.target.value)}
-                                    style={false ? { "border": "2px solid red" } : {}}
-                                    placeholder="Pickup Location"
-                                    type="text" required />
-                            </label>
-                        </div>
-                        <div className={inputstyles.inputfieldContainer}>
-                            <label htmlFor="zyloDriverDroplocation">
-                                <input id="zyloDriverDroplocation"
-                                    ref={dropRef}
-                                    onClick={() => handleClick(dropRef)}
-                                    className={inputstyles.inputfield}
-                                    value={destination}
-                                    onChange={(e) => setDestination(e.target.value)}
-                                    style={false ? { "border": "2px solid red" } : {}}
-                                    placeholder="Drop Location"
-                                    type="text" required />
-                            </label>
-                        </div>
-                    </form>
-                    <div className={styles.locationsearchwrapper} ref={locationContainerref}  >
-                        <LocationSearchPanel />
-                    </div>
+                <Routes>
+                    <Route path="/" element={<PickupDropComponent ref={[downArrowRef, pickupRef, dropRef, locationContainerref]} handleDownMovement={handleDownMovement} handleClick={handleClick} />} />
+                    <Route path="/findride" element={<> RIDES </>} />
+                </Routes>
+                <Outlet /> 
                 </div>
             </div>
         </div>
