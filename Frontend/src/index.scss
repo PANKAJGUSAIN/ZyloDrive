@@ -41,7 +41,7 @@ body {
     --user-background-color-icon:#000000 ; 
     --user-sideNavigation-card-color:ghostwhite;
     --item-hover:#F3F3F3;
-    --item-border-color:grey;
+    --item-border-color:#DFE3E8;
     --item-border-hover-color:#222222;
     --text-color: #000000;
     --primary-color: #007bff;
@@ -52,6 +52,8 @@ body {
     --input-text-color:#000000;
     --input-staleborder-color:#F3F3F3;
     --input-focusborder-color:#000000;
+    --card-color:#FFFFFF;
+    --card-border:#DFE3E8;
 }
 
 //for dark theme
@@ -71,6 +73,8 @@ body {
     --input-focusbackground-color:#1e1e1e;
     --input-staleborder-color:#4e4e4e;
     --input-focusborder-color:#353535;
+    --card-color:#111111;
+    --card-border:HSL(231.4 ,19.1% , 14%);
 }
 
 .logo{
@@ -147,4 +151,24 @@ body {
 
 .pb-3 {
     padding-bottom: 30px
+}
+
+// label{
+//     cursor: pointer;
+// }
+
+select{
+    background-color:var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+    border-radius: 5px;
+    height: 30px;
+    padding: 0px;
+    width: 100%;
+    cursor: pointer;
+    &:focus {
+        border-color: var(--card-border);
+        box-shadow: 0 0 5px var(--focus-border-color);
+        outline: none; /* Remove default outline */
+    }
 }
