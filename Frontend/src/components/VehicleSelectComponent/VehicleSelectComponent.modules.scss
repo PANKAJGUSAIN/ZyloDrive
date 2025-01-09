@@ -34,23 +34,25 @@
 }
 
 .vehicleSeatIcon{
-    font-size: calc(10px + 0.5vw);
+    font-size: clamp(12px, calc(12px + 0.5vw), 14px); 
 }
 
 .vehicleDetails {
     display: flex;
-    font-size: calc(14px + 0.5vw);
+    align-items: center;
+    font-size: clamp(14px, calc(14px + 0.5vw), 20px);
     gap: 5px;
 }
 
 .vehicleTime {
     display: flex;
-    font-size: calc(12px + 0.5vw);
+    font-size: clamp(10px, calc(10px + 0.5vw), 14px);
     gap: 5px;
 }
 .vehicleStyle{
     display: flex;
-    font-size: calc(10px + 0.5vw);
+    font-size: clamp(10px, calc(10px + 0.5vw), 14px);
+    color: grey;
     gap: 5px;
 }
 

@@ -24,7 +24,8 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                     <div>
                         <div className={styles.vehicleDetails}>
                             <h5>Uber Go</h5>
-                            <FontAwesomeIcon className={styles.vehicleSeatIcon} icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 4
+                            <FontAwesomeIcon className={styles.vehicleSeatIcon} icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 
+                            <p style={{fontSize: "clamp(12px, calc(12px + 0.5vw), 16px)" }}>4</p>
                         </div>
                         <div className={styles.vehicleTime}>
                             <div><p>2 mins away 15:03pm </p></div>
@@ -39,8 +40,9 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                     <img  loading="lazy" className={styles.vehicleImage} src={autoimg} alt="Auto" />
                     <div>
                         <div className={styles.vehicleDetails}>
-                            <h5>Uber Go</h5>
-                            <FontAwesomeIcon icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 3
+                            <h5>Uber Auto</h5>
+                            <FontAwesomeIcon className={styles.vehicleSeatIcon} icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 
+                            <p style={{fontSize: "clamp(12px, calc(12px + 0.5vw), 16px)"}}>3</p>
                         </div>
                         <div className={styles.vehicleTime}>
                             <div><p>2 mins away 15:03pm </p></div>
@@ -55,8 +57,9 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                     <img loading="lazy" className={styles.vehicleImage} src={bikeimg} alt="Bike" />
                     <div>
                         <div className={styles.vehicleDetails}>
-                            <h5>Uber Go</h5>
-                            <FontAwesomeIcon icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 1
+                            <h5>Uber Bike</h5>
+                            <FontAwesomeIcon className={styles.vehicleSeatIcon} icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 
+                            <p style={{fontSize: "clamp(12px, calc(12px + 0.5vw), 16px)"}}>2</p>
                         </div>
                         <div className={styles.vehicleTime}>
                             <div><p>2 mins away 15:03pm </p></div>

@@ -64,7 +64,7 @@
     @include mixins.respond-to('mobile') {
         height: 50%;
         position: absolute;
-        bottom: -20%;
+        bottom: 0%;
         width: 100%;
         transition: bottom , height 0.5s ease-out;
         // &:hover{
