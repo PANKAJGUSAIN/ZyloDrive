@@ -24,7 +24,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                     <div>
                         <div className={styles.vehicleDetails}>
                             <h5>Uber Go</h5>
-                            <FontAwesomeIcon icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 4
+                            <FontAwesomeIcon className={styles.vehicleSeatIcon} icon={faUserFriends} style={{ color: "var(--text-color)" }} /> 4
                         </div>
                         <div className={styles.vehicleTime}>
                             <div><p>2 mins away 15:03pm </p></div>

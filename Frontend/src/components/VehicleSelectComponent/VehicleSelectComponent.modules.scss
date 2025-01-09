@@ -13,35 +13,44 @@
     align-items: center;
     justify-content: space-around;
     padding: 10px;
-    border: 2px solid #222222;
+    border: 2px solid var(--item-border-color);
     line-height: 1.2rem;
     border-radius: 8px;
     margin-bottom: 10px;
     cursor: pointer;
+    transition: border-color 0.2s ease-out;
     &:hover{
-        border: 2px solid grey;
+        border: 2px solid var(--item-border-hover-color);
     }
 }
 
 .vehicleImage {
-    width: 6rem;
-    height: 4rem;
+    width: 15vw;
+    height: auto;
+    min-width: 3rem;
+    max-width: 6rem; // Set a maximum width
+    max-height: 4rem; // Set a maximum height
+    padding: 5px;
+}
+
+.vehicleSeatIcon{
+    font-size: calc(10px + 0.5vw);
 }
 
 .vehicleDetails {
     display: flex;
-    font-size: 16px;
+    font-size: calc(14px + 0.5vw);
     gap: 5px;
 }
 
 .vehicleTime {
     display: flex;
-    font-size: 14px;
+    font-size: calc(12px + 0.5vw);
     gap: 5px;
 }
 .vehicleStyle{
     display: flex;
-    font-size: 14px;
+    font-size: calc(10px + 0.5vw);
     gap: 5px;
 }
 

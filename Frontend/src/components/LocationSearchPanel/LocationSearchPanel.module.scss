@@ -38,6 +38,6 @@
     cursor: pointer;
 
     &:hover{
-        background-color: #222222;
+        background-color: var(--item-hover);
     }
 }

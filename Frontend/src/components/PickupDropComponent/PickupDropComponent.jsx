@@ -4,6 +4,7 @@ import { faArrowAltCircleDown } from "@fortawesome/free-regular-svg-icons"
 import styles from "../../pages/UserHome/UserHome.module.scss"
 import inputstyles from '../../pages/UserLogin/UserLogin.module.scss'
 import { forwardRef, useEffect, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const PickupDropComponent = forwardRef(({ }, ref) => {
 
@@ -14,6 +15,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
     const pickupRef = useRef(null);
     const dropRef = useRef(null);
     const locationContainerref = useRef(null);
+    const navigate = useNavigate()
 
 
     const resetcss = () => {
@@ -97,6 +99,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                     </label>
                 </div>
             </form>
+            <h2 onClick={()=>navigate('findride')}>go to ride</h2>
             <div className={styles.locationsearchwrapper} ref={locationContainerref}  >
                 <LocationSearchPanel />
             </div>
