@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import ZyloDriveHeader from "../../components/Header/Header";
 import styles from "./UserHome.module.scss";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useRef } from "react";
 
 const PickupDropComponent = lazy(() => import('../../components/PickupDropComponent/PickupDropComponent'));
 const VehicleSelectComponent = lazy(() => import('../../components/VehicleSelectComponent/VehicleSelectComponent'));

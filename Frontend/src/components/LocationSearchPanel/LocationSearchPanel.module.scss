@@ -36,6 +36,17 @@
     border-radius: 8px;
     font-size: 14px;
     cursor: pointer;
+    animation: scaleup 0.5s ease-out;
+
+    @keyframes scaleup {
+        from {
+            transform:translateY(20px);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
 
     &:hover{
         background-color: var(--item-hover);

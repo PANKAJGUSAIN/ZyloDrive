@@ -26,6 +26,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
             locationContainerref.current.style.display = "";
         }
     }
+
     const handleClick = () => {
         if (window.innerWidth < 961) {
             if (userWrapperRef.current) {
@@ -45,6 +46,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
             }
         }
     }
+
     const handleDownMovement = () => {
         if (window.innerWidth < 961) {
             if (userWrapperRef.current) {
@@ -54,6 +56,11 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                 locationContainerref.current.style.display = "none";
             }
         }
+    }
+
+    const handleLocationSelect = (location) =>{
+        console.log('locationvalue' , location)
+        navigate('findride', { state: { location } });
     }
 
     useEffect(() => {
@@ -99,9 +106,8 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                     </label>
                 </div>
             </form>
-            <h2 onClick={()=>navigate('findride')}>go to ride</h2>
             <div className={styles.locationsearchwrapper} ref={locationContainerref}  >
-                <LocationSearchPanel />
+                <LocationSearchPanel  handleLocationSelect={handleLocationSelect}/>
             </div>
         </>
     )

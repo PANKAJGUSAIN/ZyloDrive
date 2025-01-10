@@ -19,8 +19,18 @@
     margin-bottom: 10px;
     cursor: pointer;
     transition: border-color 0.2s ease-out;
+    animation: scaleUp 0.3s ease-out;
     &:hover{
         border: 2px solid var(--item-border-hover-color);
+    }
+
+    @keyframes scaleUp {
+        from {
+            transform: scale(0);
+        }
+        to {
+            transform: scale(1);
+        }
     }
 }
 
