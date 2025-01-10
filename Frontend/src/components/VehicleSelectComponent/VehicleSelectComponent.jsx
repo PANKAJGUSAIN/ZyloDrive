@@ -16,6 +16,10 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
 
+    const handleVehicleSelect = (vehicle) =>{
+        navigate('/home/ridelookout' , { state: {vehicle , location:selectedLocation} })
+    }
+
     useEffect(() => {
 
         console.log('location', selectedLocation)
@@ -30,7 +34,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
     useEffect(() => {
         if (userWrapperRef) {
             userWrapperRef.current.style.bottom = "0";
-            userWrapperRef.current.style.height = "100%";
+            userWrapperRef.current.style.height = "80%";
         }
     }, [])
 
@@ -40,7 +44,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                 <>Checking Conditions</> :
                 <div className={styles.vehicleSelectComponentWrapper}>
                     <h3 style={{ padding: "10px 10px 10px 10px" }}>Choose a Vehicle</h3>
-                    <div className={styles.vehicleContainer}>
+                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Car")}>
                         <img loading="lazy" className={styles.vehicleImage} src={carimg} alt="Car" />
                         <div>
                             <div className={styles.vehicleDetails}>
@@ -57,7 +61,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                             <h5 className={styles.vehiclePrice}>$ 83.50</h5>
                         </div>
                     </div>
-                    <div className={styles.vehicleContainer}>
+                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Auto")}>
                         <img loading="lazy" className={styles.vehicleImage} src={autoimg} alt="Auto" />
                         <div>
                             <div className={styles.vehicleDetails}>
@@ -74,7 +78,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                             <h5 className={styles.vehiclePrice}>$ 43.50</h5>
                         </div>
                     </div>
-                    <div className={styles.vehicleContainer}>
+                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Bike")}>
                         <img loading="lazy" className={styles.vehicleImage} src={bikeimg} alt="Bike" />
                         <div>
                             <div className={styles.vehicleDetails}>

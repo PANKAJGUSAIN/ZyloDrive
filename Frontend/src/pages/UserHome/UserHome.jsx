@@ -5,7 +5,7 @@ import { lazy, Suspense, useRef } from "react";
 
 const PickupDropComponent = lazy(() => import('../../components/PickupDropComponent/PickupDropComponent'));
 const VehicleSelectComponent = lazy(() => import('../../components/VehicleSelectComponent/VehicleSelectComponent'));
-
+const RideLookout = lazy(() => import('../../components/RideLookout/RideLookout'));
 
 const UserHome = () => {
     const navigate = useNavigate();
@@ -25,6 +25,7 @@ const UserHome = () => {
                         <Routes>
                             <Route path="/" element={<PickupDropComponent ref={[userWrapperRef]} />} />
                             <Route path="/findride" element={<VehicleSelectComponent ref={[userWrapperRef]} />} />
+                            <Route path="/ridelookout" element={<RideLookout ref={[userWrapperRef]} />} />
                         </Routes>
                     </Suspense>
                     <Outlet />
