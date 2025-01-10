@@ -17,7 +17,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
     const [loading, setLoading] = useState(true)
 
     const handleVehicleSelect = (vehicle) =>{
-        navigate('/home/ridelookout' , { state: {vehicle , location:selectedLocation} })
+        navigate('/home/rideconfirm' , { state: {vehicle , location:selectedLocation} })
     }
 
     useEffect(() => {
