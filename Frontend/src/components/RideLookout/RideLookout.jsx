@@ -33,6 +33,36 @@ const RideLookout = forwardRef(({ }, ref) => {
         }
     }, [])
 
+
+    useEffect(() => {
+        // window.history.pushState(null, null, window.location.pathname);
+        const handlePopState = (event) => {
+           const result = window.confirm("you are going back cancelling the ride");
+           event.preventDefault();
+        //    console.log("user going back" , result);
+        //    window.history.pushState(null, null, window.location.pathname);
+        //    window.history.pushState(null, null, window.location.pathname);
+        };
+
+        // Listen for changes in the location
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+
+    }, [navigate]);
+
+    useEffect(()=>{
+        const timer = setTimeout(() => {
+            navigate('/home/ridedetails', { state: { vehicle: selectedVehicle, location: selectedLocation } })
+        }, 2000);
+        return () => {
+            clearTimeout(timer);
+        }
+    },[])
+
+
+
     return (
         <>
             {loading ?

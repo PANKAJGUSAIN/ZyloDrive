@@ -7,6 +7,7 @@ const PickupDropComponent = lazy(() => import('../../components/PickupDropCompon
 const VehicleSelectComponent = lazy(() => import('../../components/VehicleSelectComponent/VehicleSelectComponent'));
 const RideLookout = lazy(() => import('../../components/RideLookout/RideLookout'));
 const UserRideConfirmation = lazy(() => import('../../components/UserRideConfirmation/UserRideConfirmation'));
+const RideDetails = lazy(() => import('../../components/RideDetails/RideDetails'));
 
 const UserHome = () => {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ const UserHome = () => {
                             <Route path="/findride" element={<VehicleSelectComponent ref={[userWrapperRef]} />} />
                             <Route path="/rideconfirm" element={<UserRideConfirmation ref={[userWrapperRef]} />} />
                             <Route path="/ridelookout" element={<RideLookout ref={[userWrapperRef]} />} />
+                            <Route path="/ridedetails" element={<RideDetails ref={[userWrapperRef]} />} />
                         </Routes>
                     </Suspense>
                     <Outlet />
