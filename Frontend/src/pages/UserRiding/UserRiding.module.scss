@@ -1,0 +1,11 @@
+@use '../../mixins.scss';
+
+.downArrow{
+    display: none;
+    @include mixins.respond-to('tablet') {
+        display: block;
+    }
+    @include mixins.respond-to('mobile') {
+        display: block;
+    }
+}
