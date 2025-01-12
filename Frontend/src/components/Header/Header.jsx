@@ -27,6 +27,12 @@ const ZyloDriveHeader = () => {
         }
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleProfileView();
+        }
+    };
+
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -42,7 +48,7 @@ const ZyloDriveHeader = () => {
                 <p>ZyloDrive</p>
                 
             </div>
-            <div onClick={() => { handleProfileView() }} className={styles.userIcon}>
+            <div tabIndex={0}  onKeyDown={handleKeyPress} onClick={() => { handleProfileView() }} className={styles.userIcon}>
                 <FontAwesomeIcon icon={faUser} style={{ color: 'var(--background-color)' }} size="lg" />
             </div>
             <div className={styles.profileContainer} data-userclick="false" ref={profileRef}>

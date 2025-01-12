@@ -169,6 +169,6 @@ select{
     &:focus {
         border-color: var(--card-border);
         box-shadow: 0 0 5px var(--focus-border-color);
-        outline: none; /* Remove default outline */
+        // outline: none; /* Remove default outline */
     }
 }
