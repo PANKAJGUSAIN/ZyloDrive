@@ -671,4 +671,156 @@ curl -X GET http://localhost:5000/users/logout \
 
 ---
 </details>
-](url)
+<details>
+   <summary>
+    <h2> /maps  </h2>
+  </summary>
+
+## **Base Route**
+All routes start with the `/maps` base route.
+
+---
+
+## **1. Fetch Coordinates of an Address**
+
+### **Route**
+`GET /maps/get-coordinates`
+
+### **Description**
+Retrieves the latitude and longitude for a given address.
+
+### **Request Query Parameters**
+- `address` (string, required): The address to retrieve coordinates for. Must have a minimum length of 3 characters.
+
+### **Authentication**
+The route is protected by the `authUser` middleware.
+
+### **Response**
+#### **200 OK**
+Returns the coordinates of the address:
+```json
+{
+  "ltd": <latitude>,
+  "lng": <longitude>
+}
+```
+
+#### **400 Bad Request**
+If validation fails or the address is not provided:
+```json
+{
+  "errors": [
+    { "msg": "Invalid value", "param": "address", "location": "query" }
+  ]
+}
+```
+
+#### **404 Not Found**
+If the address cannot be found:
+```json
+{
+  "message": "Coordinates not found"
+}
+```
+
+---
+
+## **2. Fetch Distance and Time Between Two Points**
+
+### **Route**
+`GET /maps/get-distance-time`
+
+### **Description**
+Calculates the distance and estimated travel time between two locations.
+
+### **Request Query Parameters**
+- `origin` (string, required): The starting point. Must have a minimum length of 3 characters.
+- `destination` (string, required): The ending point. Must have a minimum length of 3 characters.
+
+### **Authentication**
+The route is protected by the `authUser` middleware.
+
+### **Response**
+#### **200 OK**
+Returns the distance and travel time:
+```json
+{
+  "distance": {
+    "text": "<distance in readable format>",
+    "value": <distance in meters>
+  },
+  "duration": {
+    "text": "<duration in readable format>",
+    "value": <duration in seconds>
+  }
+}
+```
+
+#### **400 Bad Request**
+If validation fails or parameters are missing:
+```json
+{
+  "errors": [
+    { "msg": "Invalid value", "param": "origin", "location": "query" },
+    { "msg": "Invalid value", "param": "destination", "location": "query" }
+  ]
+}
+```
+
+#### **404 Not Found**
+If no route is found:
+```json
+{
+  "message": "No routes found"
+}
+```
+
+---
+
+## **3. Fetch Address Suggestions**
+
+### **Route**
+`GET /maps/get-suggestions`
+
+### **Description**
+Provides autocomplete suggestions for a given address query.
+
+### **Request Query Parameters**
+- `address` (string, required): The partial address or query for suggestions. Must have a minimum length of 3 characters.
+
+### **Authentication**
+The route is protected by the `authUser` middleware.
+
+### **Response**
+#### **200 OK**
+Returns a list of address suggestions:
+```json
+[
+  {
+    "description": "<suggested address>",
+    "place_id": "<Google place ID>"
+  },
+  ...
+]
+```
+
+#### **400 Bad Request**
+If validation fails or the address query is missing:
+```json
+{
+  "errors": [
+    { "msg": "Invalid value", "param": "address", "location": "query" }
+  ]
+}
+```
+
+---
+
+## **Notes**
+- Ensure the API key for Google Maps services is set in the environment variable `GOOGLE_MAPS_API`.
+- The routes require the `authUser` middleware for secure access.
+- Validation rules for query parameters are implemented using `express-validator`.
+
+---
+
+</details>
