@@ -162,8 +162,8 @@ select{
     color: var(--text-color);
     border: 1px solid var(--card-border);
     border-radius: 5px;
-    height: 30px;
-    padding: 0px;
+    height: auto;
+    padding: 5px;
     width: 100%;
     cursor: pointer;
     &:focus {

@@ -14,6 +14,7 @@ const UserProtectedWrapper = lazy(() => import('./pages/UserProtectedWrapper/Use
 const CaptainProtectedWrapper = lazy(() => import('./pages/CaptainProtectedWrapper/CaptainProtectedWrapper'));
 const UserHome = lazy(() => import('./pages/UserHome/UserHome'));
 const UserRiding = lazy(() => import('./pages/UserRiding/UserRiding'));
+const CaptainHome = lazy(() => import('./pages/CaptainHome/CaptainHome'));
 
 const App = () => {
     return (
@@ -31,7 +32,7 @@ const App = () => {
                 <Route element={<CaptainProtectedWrapper />}>
                     <Route path='/captain-login' element={<CaptainLogin />} />
                     <Route path='/captain-signup' element={<CaptainSignup />} />
-                    <Route path='/captain-home' element={<div>Hello Captain</div>} />
+                    <Route path='/captain-home' element={<CaptainHome/>} />
                     <Route path='/captains/logout' element={<CaptainLogout />} />
                 </Route>
             </Routes>
