@@ -10,6 +10,7 @@ const connectToDb = require('./db/db');
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/map.routes');
+const RideRoutes = require('./routes/ride.routes');
 // ---routesimport end 
 
 connectToDb();
@@ -29,6 +30,7 @@ app.get('/', (req,res)=>{
 app.use('/users',userRoutes);
 app.use('/captains',captainRoutes);
 app.use('/maps',mapsRoutes);
+app.use('/rides',RideRoutes);
 //routes end
 
 module.exports = app;
