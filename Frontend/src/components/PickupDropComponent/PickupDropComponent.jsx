@@ -6,10 +6,14 @@ import inputstyles from '../../pages/UserLogin/UserLogin.module.scss'
 import { forwardRef, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+
+
 const PickupDropComponent = forwardRef(({ }, ref) => {
 
     const [pickup, setPickup] = useState('');
     const [destination, setDestination] = useState('');
+    const [suggestedlocation, setSuggestedLocation] = useState([]);
+    const [inputActive, setInputActive] = useState('');
     const [userWrapperRef] = ref;
     const downArrowRef = useRef(null);
     const pickupRef = useRef(null);
@@ -27,7 +31,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
         }
     }
 
-    const handleClick = () => {
+    const handleClick = (ref) => {
         if (window.innerWidth < 961) {
             if (userWrapperRef.current) {
                 userWrapperRef.current.style.bottom = "0";
@@ -45,6 +49,18 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                 locationContainerref.current.style.display = "block";
             }
         }
+
+        // using ref to change the active input field 
+        if (ref.current.dataset.name === "pickup") {
+            console.log('ref', ref.current.dataset.name)
+            ref.current.dataset.isactive = "true";
+            dropRef.current.dataset.isactive = "false";
+        } else {
+            console.log('ref', ref.current.dataset.name)
+            ref.current.dataset.isactive = "true";
+            pickupRef.current.dataset.isactive = "false";
+        }
+
     }
 
     const handleDownMovement = () => {
@@ -58,9 +74,18 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
         }
     }
 
-    const handleLocationSelect = (location) =>{
-        console.log('locationvalue' , location)
-        navigate('findride', { state: { location } });
+    const handleLocationSelect = (location) => {
+        if (inputActive === 'pickup') {
+            setPickup(location.description);
+            pickupRef.current.focus();
+        } else {
+            setDestination(location.description);
+            dropRef.current.focus();
+        }
+        if( pickup && destination){
+            navigate('findride', { state: { pickup, destination } });
+        }
+        
     }
 
     useEffect(() => {
@@ -69,6 +94,71 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
             window.removeEventListener('resize', resetcss);
         };
     }, []);
+
+
+    function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(this, args);
+            }, wait);
+
+        };
+    };
+
+    //you are ensuring that the same instance of the function is used across re-renders
+    const handleSearch = useRef(debounce((value) => {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const token = sessionStorage.getItem('zylotoken');
+
+        if (!apiUrl) {
+            console.error('API URL is not set in environment variables');
+            return;
+        }
+
+        if (!token) {
+            console.error('User token is not available in localStorage');
+            return;
+        }
+
+        fetch(`${apiUrl}/maps/get-suggestions?address=${value}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                setSuggestedLocation(data);
+                console.log('data', data);
+            })
+            .catch(err => {
+                console.error('Error fetching suggestions:', err);
+            });
+    }, 300));
+
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        if (name === 'pickup') {
+            setPickup(value);
+            setInputActive('pickup');
+        } else if (name === 'destination') {
+            setDestination(value);
+            setInputActive('destination');
+        }
+        if (value.length > 2) {
+            handleSearch.current(value);
+        }
+
+    };
+
 
     return (
         <>
@@ -83,10 +173,13 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                     <label htmlFor="zyloDriverPickuplocation">
                         <input id="zyloDriverPickuplocation"
                             ref={pickupRef}
+                            data-name="pickup"
+                            name="pickup"
+                            data-isactive="false"
                             onClick={() => handleClick(pickupRef)}
                             className={inputstyles.inputfield}
                             value={pickup}
-                            onChange={(e) => setPickup(e.target.value)}
+                            onChange={handleInputChange}
                             style={false ? { "border": "2px solid red" } : {}}
                             placeholder="Pickup Location"
                             type="text" required />
@@ -95,11 +188,14 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                 <div className={inputstyles.inputfieldContainer}>
                     <label htmlFor="zyloDriverDroplocation">
                         <input id="zyloDriverDroplocation"
+                            data-name="drop"
+                            name="destination"
                             ref={dropRef}
+                            data-isactive="false"
                             onClick={() => handleClick(dropRef)}
                             className={inputstyles.inputfield}
                             value={destination}
-                            onChange={(e) => setDestination(e.target.value)}
+                            onChange={handleInputChange}
                             style={false ? { "border": "2px solid red" } : {}}
                             placeholder="Drop Location"
                             type="text" required />
@@ -107,7 +203,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                 </div>
             </form>
             <div className={styles.locationsearchwrapper} ref={locationContainerref}  >
-                <LocationSearchPanel  handleLocationSelect={handleLocationSelect}/>
+                <LocationSearchPanel suggestedlocation={suggestedlocation} handleLocationSelect={handleLocationSelect} />
             </div>
         </>
     )

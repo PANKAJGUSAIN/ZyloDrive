@@ -12,7 +12,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { state } = location;
-    const { location: selectedLocation } = state || {};
+    const { pickup , destination } = state || {};
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
 
@@ -22,13 +22,13 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
 
     useEffect(() => {
 
-        console.log('location', selectedLocation)
-        if (!selectedLocation) {
+        console.log('location', pickup, destination)
+        if (!pickup && !destination) {
             navigate("/home")
         }
         setLoading(false)
 
-    }, [selectedLocation])
+    }, [pickup , destination])
 
 
     useEffect(() => {
