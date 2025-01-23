@@ -15,8 +15,24 @@ const RideRoutes = require('./routes/ride.routes');
 
 connectToDb();
 
+// Custom CORS configuration
+const allowedOrigins = ['https://example.com']; // Replace with your allowed URL(s)
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'], // Allow only GET, POST, and OPTIONS
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow only specific headers
+  credentials: true, // Enable cookies or authentication headers
+};
+
+
 //middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
