@@ -24,7 +24,6 @@ const UserLogin = () => {
 
 
     const validatePassword = (password) => {
-        console.log(password.length)
         return password.length > 6;
     }
 
@@ -49,15 +48,14 @@ const UserLogin = () => {
         setError(errors);
 
         if (Object.keys(errors).length === 0) {
-            console.log(userEmail, userPassword);
             // Proceed with form submission
             const data = { email: userEmail, password: userPassword };
             setLoading(true);
             axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data)
                 .then(response => response.data)
                 .then(data => {
-                    console.log(data);
                     changeData({ 
+                        _id : data.user._id ,
                         token : data.token ,
                         email:data.user.email ,
                              fullname :{ 

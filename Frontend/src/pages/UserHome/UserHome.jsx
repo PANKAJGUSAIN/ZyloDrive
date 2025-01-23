@@ -1,7 +1,9 @@
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import ZyloDriveHeader from "../../components/Header/Header";
 import styles from "./UserHome.module.scss";
-import { lazy, Suspense, useRef } from "react";
+import { lazy, Suspense, useContext, useEffect, useRef } from "react";
+import { UserContext } from "../../Context/UserContext";
+import { SocketContext } from "../../Context/SocketContext";
 
 const PickupDropComponent = lazy(() => import('../../components/PickupDropComponent/PickupDropComponent'));
 const VehicleSelectComponent = lazy(() => import('../../components/VehicleSelectComponent/VehicleSelectComponent'));
@@ -12,6 +14,12 @@ const RideDetails = lazy(() => import('../../components/RideDetails/RideDetails'
 const UserHome = () => {
     const navigate = useNavigate();
     const userWrapperRef = useRef(null);
+    const { sendMessage, recieveMessage } = useContext(SocketContext);  
+    const { data } = useContext(UserContext);
+
+    useEffect(() => {
+        sendMessage("join" , { userType: "user" , userId : data._id });
+    },[])
 
 
 
