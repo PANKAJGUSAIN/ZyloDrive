@@ -5,6 +5,7 @@ import styles from "../../pages/UserHome/UserHome.module.scss"
 import inputstyles from '../../pages/UserLogin/UserLogin.module.scss'
 import { forwardRef, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import Button from "../button/button"
 
 
 
@@ -52,11 +53,9 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
 
         // using ref to change the active input field 
         if (ref.current.dataset.name === "pickup") {
-            console.log('ref', ref.current.dataset.name)
             ref.current.dataset.isactive = "true";
             dropRef.current.dataset.isactive = "false";
         } else {
-            console.log('ref', ref.current.dataset.name)
             ref.current.dataset.isactive = "true";
             pickupRef.current.dataset.isactive = "false";
         }
@@ -82,9 +81,9 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
             setDestination(location.description);
             dropRef.current.focus();
         }
-        if( pickup && destination){
-            navigate('findride', { state: { pickup, destination } });
-        }
+        // if( pickup && destination){
+        //     navigate('findride', { state: { pickup, destination } });
+        // }
         
     }
 
@@ -159,6 +158,12 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
 
     };
 
+    const FindRide = () => {
+        if (pickup && destination) {
+            navigate('findride', { state: { pickup, destination } });
+        }
+    }
+
 
     return (
         <>
@@ -201,6 +206,7 @@ const PickupDropComponent = forwardRef(({ }, ref) => {
                             type="text" required />
                     </label>
                 </div>
+                <Button type="button" onClick={FindRide} >Find Ride</Button>
             </form>
             <div className={styles.locationsearchwrapper} ref={locationContainerref}  >
                 <LocationSearchPanel suggestedlocation={suggestedlocation} handleLocationSelect={handleLocationSelect} />

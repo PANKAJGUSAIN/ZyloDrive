@@ -11,14 +11,14 @@ const RideLookout = forwardRef(({ }, ref) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { state } = location;
-    const { vehicle: selectedVehicle, location: selectedLocation } = state || {};
+    const { vehicle: selectedVehicle, location: selectedLocation , data } = state || {};
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
 
         console.log('location', state)
-        if (!selectedVehicle && !selectedLocation) {
+        if (!selectedVehicle && !selectedLocation && !data) {
             navigate("/home")
         }
         setLoading(false)
@@ -53,12 +53,12 @@ const RideLookout = forwardRef(({ }, ref) => {
     }, [navigate]);
 
     useEffect(()=>{
-        const timer = setTimeout(() => {
-            navigate('/home/ridedetails', { state: { vehicle: selectedVehicle, location: selectedLocation } })
-        }, 2000);
-        return () => {
-            clearTimeout(timer);
-        }
+        // const timer = setTimeout(() => {
+        //     navigate('/home/ridedetails', { state: { vehicle: selectedVehicle, location: selectedLocation } })
+        // }, 2000);
+        // return () => {
+        //     clearTimeout(timer);
+        // }
     },[])
 
 
@@ -72,27 +72,27 @@ const RideLookout = forwardRef(({ }, ref) => {
                     <div className={styles.RideLookupLoading}>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {selectedVehicle == "Car" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={carimg} alt="Car" />}
-                        {selectedVehicle == "Auto" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={autoimg} alt="Auto" />}
-                        {selectedVehicle == "Bike" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={bikeimg} alt="Bike" />}
+                        {selectedVehicle == "car" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={carimg} alt="Car" />}
+                        {selectedVehicle == "auto" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={autoimg} alt="Auto" />}
+                        {selectedVehicle == "motorcycle" && <img loading="lazy" className={styles.RideLookupVehicleLoading} src={bikeimg} alt="Bike" />}
                     </div>
                     <div className={styles.RideLookupline}>
                     </div>
                     <div className={styles.ridelocationdetials}>
                         <FontAwesomeIcon icon={faLocationDot} style={{ color: "var(--text-color)" }} />
-                        <h5>{selectedLocation}</h5>
+                        <h5>{data?.pickup}</h5>
                     </div>
                     <div className={styles.RideLookupline}>
                     </div>
                     <div className={styles.ridelocationdetials}>
                         <FontAwesomeIcon icon={faBox} style={{ color: "var(--text-color)" }} />
-                        <h5>{selectedLocation}</h5>
+                        <h5>{data?.destination}</h5>
                     </div>
                     <div className={styles.RideLookupline}>
                     </div>
                     <div className={styles.ridelocationdetials}>
                         <FontAwesomeIcon icon={faCashRegister} style={{ color: "var(--text-color)" }} />
-                        <h5>$123.34</h5>
+                        <h5>{` ${data?.fare}`}</h5>
                     </div>
                 </div>
             }
