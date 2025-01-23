@@ -6,18 +6,29 @@ import bikeimg from "../../assets/Zylo-bike.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import { far } from "@fortawesome/free-regular-svg-icons"
 
 const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
 
     const location = useLocation();
     const navigate = useNavigate();
     const { state } = location;
-    const { pickup , destination } = state || {};
+    const { pickup, destination } = state || {};
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
+    const [fares, setFares] = useState({})
 
-    const handleVehicleSelect = (vehicle) =>{
-        navigate('/home/rideconfirm' , { state: {vehicle , location:selectedLocation} })
+
+    const handleVehicleSelect = (vehicle, pickup, destination) => {
+        navigate('/home/rideconfirm', {
+            state:
+            {
+                vehicle,
+                location: { pickup, destination },
+                fare: fares[vehicle]
+            }
+        }
+        )
     }
 
     useEffect(() => {
@@ -26,9 +37,22 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
         if (!pickup && !destination) {
             navigate("/home")
         }
-        setLoading(false)
-
-    }, [pickup , destination])
+        else {
+            fetch(`${process.env.REACT_APP_API_URL}/rides/fare?pickup=${pickup}&destination=${destination}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(res => res.json()).then(data => {
+                    setLoading(false)
+                    setFares(data)
+                    console.log(data)
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
+    }, [pickup, destination])
 
 
     useEffect(() => {
@@ -41,10 +65,10 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
     return (
         <>
             {loading ?
-                <>Checking Conditions</> :
-                <div className={styles.vehicleSelectComponentWrapper}>
+                <>Fetching Details</> :
+                <div  role="select" aria-labelledby="select vehicle" className={styles.vehicleSelectComponentWrapper}>
                     <h3 style={{ padding: "10px 10px 10px 10px" }}>Choose a Vehicle</h3>
-                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Car")}>
+                    <div role="selectitem" aria-labelledby="select car as vehicle" tabIndex={0} className={styles.vehicleContainer} onKeyDown={(e)=>{ if (e.key === 'Enter' || e.key ==='Space'){handleVehicleSelect("car", pickup, destination)}  }} onClick={() => handleVehicleSelect("car", pickup, destination)}>
                         <img loading="lazy" className={styles.vehicleImage} src={carimg} alt="Car" />
                         <div>
                             <div className={styles.vehicleDetails}>
@@ -58,10 +82,10 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                             <div className={styles.vehicleStyle}><p>Affordable, Compact Rides</p></div>
                         </div>
                         <div>
-                            <h5 className={styles.vehiclePrice}>$ 83.50</h5>
+                            <h5 className={styles.vehiclePrice}>{`\u20B9 ${fares.car}`}</h5>
                         </div>
                     </div>
-                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Auto")}>
+                    <div  role="selectitem" aria-labelledby="select auto as vehicle" tabIndex={0} className={styles.vehicleContainer} onKeyDown={(e)=>{ if (e.key === 'Enter' || e.key ==='Space'){handleVehicleSelect("auto", pickup, destination)}  }}  onClick={() => handleVehicleSelect("auto", pickup, destination)}>
                         <img loading="lazy" className={styles.vehicleImage} src={autoimg} alt="Auto" />
                         <div>
                             <div className={styles.vehicleDetails}>
@@ -75,10 +99,10 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                             <div className={styles.vehicleStyle}><p>Affordable, Compact Rides</p></div>
                         </div>
                         <div>
-                            <h5 className={styles.vehiclePrice}>$ 43.50</h5>
+                            <h5 className={styles.vehiclePrice}>{`\u20B9 ${fares.auto}`}</h5>
                         </div>
                     </div>
-                    <div className={styles.vehicleContainer} onClick={()=>handleVehicleSelect("Bike")}>
+                    <div  role="selectitem" aria-labelledby="select motorcycle as vehicle" tabIndex={0} className={styles.vehicleContainer} onKeyDown={(e)=>{ if (e.key === 'Enter' || e.key ==='Space'){handleVehicleSelect("motorcycle", pickup, destination)}  }}  onClick={() => handleVehicleSelect("motorcycle", pickup, destination)}>
                         <img loading="lazy" className={styles.vehicleImage} src={bikeimg} alt="Bike" />
                         <div>
                             <div className={styles.vehicleDetails}>
@@ -92,7 +116,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                             <div className={styles.vehicleStyle}><p>Affordable, Compact Rides</p></div>
                         </div>
                         <div>
-                            <h5 className={styles.vehiclePrice}>$ 23.50</h5>
+                            <h5 className={styles.vehiclePrice}>{`\u20B9 ${fares.motorcycle}`}</h5>
                         </div>
                     </div>
                 </div>
