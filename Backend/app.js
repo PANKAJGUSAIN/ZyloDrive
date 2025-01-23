@@ -16,7 +16,7 @@ const RideRoutes = require('./routes/ride.routes');
 connectToDb();
 
 // Custom CORS configuration
-const allowedOrigins = ['https://pankajgusain.github.io']; // Replace with your allowed URL(s)
+const allowedOrigins = ['https://pankajgusain.github.io' ,'http://localhost:3001']; // Replace with your allowed URL(s)
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
