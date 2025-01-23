@@ -22,7 +22,10 @@ const UserProtectedWrapper = ()=>{
                     Authorization: `Bearer ${token}`
                 },
             }).then((response)=>{
+                console.log(response)
                 const data = {
+                    _id : response.data._id ,
+                    token : response.data.token ,
                     email:response.data.email,
                     fullname:response.data.fullname,
                 }
