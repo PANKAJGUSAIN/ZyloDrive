@@ -16,7 +16,7 @@ const RideRoutes = require('./routes/ride.routes');
 connectToDb();
 
 // Custom CORS configuration
-const allowedOrigins = ['https://example.com']; // Replace with your allowed URL(s)
+const allowedOrigins = ['https://pankajgusain.github.io/ZyloDrive']; // Replace with your allowed URL(s)
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
