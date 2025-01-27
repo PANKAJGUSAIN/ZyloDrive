@@ -4,10 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faHome, faLocation } from '@fortawesome/free-solid-svg-icons';
 import Button from '../button/button';
 import { CaptainContext } from '../../Context/CaptainContext';
+import { useNavigate } from 'react-router-dom';
 
 const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreData }) => {
+    const navigate = useNavigate()
     const [rideData, setrideData] = useState([])
     const { captaindata } = useContext(CaptainContext);
+    const [disabled ,setisDisabled] = useState(false)
 
     useEffect(() => {
         setrideData(data)
@@ -35,6 +38,7 @@ const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreDat
     }
 
     const handleRideAccept= async (id) =>{
+        setisDisabled(true)
         const result = await fetch(`${process.env.REACT_APP_API_URL}/rides/confirm`,{
             method: 'POST',
             headers: {
@@ -43,7 +47,11 @@ const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreDat
             },
             body:JSON.stringify({rideId:id , captainId:captaindata._id})
         })
-        const response = result.json();
+        const response = await result.json();
+        onClose();
+        ignoreData(id);
+        setisDisabled(false);
+        navigate('/captain-home/confirm-Ride' , { state:{ data : response } })
         console.log(response);
     }
 
@@ -72,8 +80,8 @@ const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreDat
                             <div style={{ fontSize:"14px", display:"flex" , flexWrap:"wrap", alignItems:"center", gap:"5px", height: "2rem" , padding:"10px 0px" }}>
                                 {`\u20B9 ${item.fare}`}
                             </div>
-                            <Button onClick={()=>handleRideAccept(item._id)}> Accept</Button>
-                            <Button onClick={()=>handleIgnoreItem(item._id)} > Ignore</Button>
+                            <Button style={{ backgroundColor: "Green" }} onClick={()=>handleRideAccept(item._id)} disabled={disabled}>{disabled ? "Accepting..": "Accept"}</Button>
+                            <Button style={{ backgroundColor: "Red" }} onClick={()=>handleIgnoreItem(item._id)} > Ignore</Button>
                         </div>
                     </div>
                 )) :

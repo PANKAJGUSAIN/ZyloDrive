@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import style from "./RideDetails.module.scss";
 import styles from "../RideLookout/RideLookout.module.scss";
@@ -7,6 +7,7 @@ import autoimg from "../../assets/Zylo-Auto.png";
 import bikeimg from "../../assets/Zylo-bike.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBox, faCashRegister, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { SocketContext } from "../../Context/SocketContext";
 
 const RideDetails = forwardRef(({ }, ref) => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const RideDetails = forwardRef(({ }, ref) => {
     const { vehicle: selectedVehicle, location: selectedLocation , data } = state || {};
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
+    const { socket } = useContext(SocketContext)
 
     useEffect(() => {
 
@@ -32,6 +34,17 @@ const RideDetails = forwardRef(({ }, ref) => {
             userWrapperRef.current.style.height = "100%";
         }
     }, [])
+
+    useEffect(()=>{
+        const handleRideStart = (data)=>{
+            console.log("handleRideStart", data)
+        }
+        socket.on('ride-started',handleRideStart)
+
+        return () =>{
+            socket.off('ride-started',handleRideStart)
+        }
+    },[])
 
 
     return (

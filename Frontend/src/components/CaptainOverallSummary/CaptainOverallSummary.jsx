@@ -25,7 +25,7 @@ const CaptainOverallSummary = forwardRef(({ }, ref) => {
 
     return (
         <>
-            <div ref={userWrapperRef} className={styles.UserLocationWrapper}>
+            <div ref={userWrapperRef} style={{minHeight:"20%"}} className={styles.UserLocationWrapper}>
                 <div style={{ padding: "2px" }}>
                     <div title="expand" data-ismaxed="false" ref={arrowref} tabIndex={0} role="move-up" style={{ cursor: "pointer", height: "5px", width: "20%", position: "absolute", left: "40%", background: "var(--item-border-hover-color)", borderRadius: "2px" }} onClick={toggleIsMaxed}></div>
                     <div style={{ display: 'flex', alignItems: "center", gap: "10px", padding: "10px", justifyContent: "space-between" }}>
@@ -39,17 +39,17 @@ const CaptainOverallSummary = forwardRef(({ }, ref) => {
                         </div>
                     </div>
                     <div style={{ width: "100%", height: "auto", display: "flex", alignItems: "center", justifyContent: "space-evenly", gap: "5px", flexWrap: "wrap", borderRadius: "8px" }}>
-                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "#E77F00", flexGrow: "1", borderRadius: "8px" }}>
+                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "var(--button-background-color)",color:"var(--button-text-color)", flexGrow: "1", borderRadius: "8px" }}>
                             <FontAwesomeIcon icon={faGauge} />
                             <p style={{ fontWeight: "600" }}>10.2</p>
                             <h5>Hours Online</h5>
                         </div>
-                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "#E77F00", flexGrow: "1", borderRadius: "8px" }}>
+                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "var(--button-background-color)",color:"var(--button-text-color)", flexGrow: "1", borderRadius: "8px" }}>
                             <FontAwesomeIcon icon={faClock} />
                             <p style={{ fontWeight: "600" }}>10.2</p>
                             <h5>Hours Online</h5>
                         </div>
-                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "#E77F00", flexGrow: "1", borderRadius: "8px" }}>
+                        <div style={{ display: "flex", width: "45%", flexDirection: "column", alignItems: "center", gap: "2px", padding: "10px", backgroundColor: "var(--button-background-color)",color:"var(--button-text-color)", flexGrow: "1", borderRadius: "8px" }}>
                             <FontAwesomeIcon icon={faNoteSticky} />
                             <p style={{ fontWeight: "600" }}>10.2</p>
                             <h5>Hours Online</h5>

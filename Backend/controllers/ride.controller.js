@@ -91,3 +91,25 @@ module.exports.confirmRide = async( req , res ) => {
         return res.status(500).json({message: error.message });
     } 
 }
+
+module.exports.startRide = async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ message: error.array() });
+    }
+
+    const { rideId, otp } = req.query;
+
+    try {
+        const ride = await rideService.startRide(rideId, otp);
+        res.status(200).json(ride);
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+    
+
+    
+
+
+}

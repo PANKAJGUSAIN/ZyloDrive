@@ -8,6 +8,7 @@ import Modal from "../../components/Modal/Modal";
 
 
 const CaptainOverallSummary = lazy(() => import('../../components/CaptainOverallSummary/CaptainOverallSummary'));
+const CaptainRideConfirm = lazy(()=> import('../../components/CaptainRideConfirm/CaptainRideConfirm'));
 
 const UserHome = () => {
     const navigate = useNavigate();
@@ -89,6 +90,7 @@ const UserHome = () => {
                 <Suspense fallback={<>Loading subComponents....</>}>
                     <Routes>
                         <Route path="/" element={<CaptainOverallSummary />} />
+                        <Route path="/confirm-Ride" element={<CaptainRideConfirm/>}/>
                     </Routes>
                 </Suspense>
                 <Outlet />
