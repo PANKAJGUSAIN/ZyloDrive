@@ -5,7 +5,7 @@ const captainModel = require('./models/captain.model');
 let io ;
 
 // initialize socket
-module.exports.initializeSocket = (server) =>{
+const initializeSocket = (server) =>{
 
     io = socketIo(server , {
         cors: {
@@ -35,10 +35,27 @@ module.exports.initializeSocket = (server) =>{
                 const captain = await captainModel.findById(userId);
                 if(captain){
                     captain.socketId = socket.id;
-                    await captain.save();
+                    const result = await captain.save();
+                    console.log('captain updated' , result);
                 }
             }
         }); 
+
+        // to update captain location
+        socket.on('update-location-captain', async (data) => {
+            const { userId, location } = data;
+
+            if( !location || !location.ltd || !location.lng){
+                return new Error('Location is required');
+            }
+            
+            const captain = await captainModel.findById(userId);
+            if (captain) {
+                captain.location = {ltd: location.ltd, lng: location.lng};
+                const result = await captain.save();
+                console.log('captain location updated');
+            }
+        });
 
         // disconnect event
         socket.on('disconnect', () => {
@@ -49,12 +66,14 @@ module.exports.initializeSocket = (server) =>{
 }
 
 // send message to connected client
-module.exports.sendMessageToSocketId = (socketId , message) =>{ 
+const sendMessageToSocketId = (socketId , messageObj) =>{ 
     if(!io){
         return new Error('Socket is not initialized');
     }   
     else{
-        io.to(socketId).emit('message', message);
+        io.to(socketId).emit(messageObj.event , messageObj.data);
     }
     
 }
+
+module.exports  = { initializeSocket  ,  sendMessageToSocketId }

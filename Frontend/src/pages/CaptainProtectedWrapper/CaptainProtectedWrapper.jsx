@@ -23,6 +23,7 @@ const CaptainProtectedWrapper = ()=>{
                 },
             }).then((response)=>{
                 const data = {
+                    _id:response.data._id,
                     email:response.data.email,
                     fullname:response.data.fullname,
                     status:response.data.status,

@@ -1,3 +1,4 @@
+const captainModel = require('../models/captain.model');
 
 // fetch address co-ordinate 
 //accepts address 
@@ -68,4 +69,20 @@ module.exports.getAutoCompleteSuggestions = async (address) => {
         console.log(error);
         throw error;
     }
+}
+
+module.exports.getCaptains =  async ( ltd , lng , radius ) => {
+    console.log(ltd,lng,radius);
+
+    // radius in km
+
+    const captains = await  captainModel.find({
+        location:{
+            $geoWithin:{
+                $centerSphere:[[ltd,lng],radius/6378.1]
+            }
+        }
+    });
+
+    return captains
 }

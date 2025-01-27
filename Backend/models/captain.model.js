@@ -58,10 +58,10 @@ const captainSchema = new mongoose.Schema({
         }
     },
     location:{ // required is not true as as for the first time captain will be by default inactive so will have no location
-        lat:{
+        ltd:{
             type:Number, 
         },
-        long:{
+        lng:{
             type:Number, 
         }
     }
