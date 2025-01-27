@@ -12,14 +12,14 @@ const RideDetails = forwardRef(({ }, ref) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
-    const { vehicle: selectedVehicle, location: selectedLocation } = state || {};
+    const { vehicle: selectedVehicle, location: selectedLocation , data } = state || {};
     const [userWrapperRef] = ref;
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
 
-        console.log('location', state)
-        if (!selectedVehicle && !selectedLocation) {
+        console.log('location', selectedVehicle , selectedLocation , data)
+        if (!selectedVehicle && !selectedLocation && !data) {
             navigate("/home")
         }
         setLoading(false)
@@ -42,33 +42,34 @@ const RideDetails = forwardRef(({ }, ref) => {
                     : <div className={style.RideDetailsComponentWrapper}>
                         <div className={style.RideDetials}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "flexStart" }}>
-                                {selectedVehicle == "Car" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={carimg} alt="Car" />}
-                                {selectedVehicle == "Auto" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={autoimg} alt="Auto" />}
-                                {selectedVehicle == "Bike" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={bikeimg} alt="Bike" />}
+                                {selectedVehicle == "car" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={carimg} alt="Car" />}
+                                {selectedVehicle == "auto" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={autoimg} alt="Auto" />}
+                                {selectedVehicle == "motorcycle" && <img loading="lazy" className={style.RideLookupVehicleLoading} src={bikeimg} alt="Bike" />}
                             </div>
                             <div>
-                                <h5 style={{ paddingBottom: '5px' }}>Sarthak</h5>
-                                <h4 style={{ paddingBottom: '5px' }}>MP04 AB 1234</h4>
+                                <h5 style={{ paddingBottom: '5px' }}>{data?.captain.fullname?.firstname+" "+ data.captain.fullname?.lastname}</h5>
+                                <h4 style={{ paddingBottom: '5px' }}>{data?.captain.plate}</h4>
                                 <p style={{ paddingBottom: '10px', fontSize: "12px" }}>Maruti suski Alto</p>
+                                <h2>OTP : {data?.otp}</h2>
                             </div>
                         </div>
                         <div className={styles.RideLookupline}>
                         </div>
                         <div className={styles.ridelocationdetials}>
                             <FontAwesomeIcon icon={faLocationDot} style={{ color: "var(--text-color)" }} />
-                            <h5>{selectedLocation}</h5>
+                            <h5>{data?.pickup}</h5>
                         </div>
                         <div className={styles.RideLookupline}>
                         </div>
                         <div className={styles.ridelocationdetials}>
                             <FontAwesomeIcon icon={faBox} style={{ color: "var(--text-color)" }} />
-                            <h5>{selectedLocation}</h5>
+                            <h5>{data?.destination}</h5>
                         </div>
                         <div className={styles.RideLookupline}>
                         </div>
                         <div className={styles.ridelocationdetials}>
                             <FontAwesomeIcon icon={faCashRegister} style={{ color: "var(--text-color)" }} />
-                            <h5>$123.34</h5>
+                            <h5>{`\u20B9${data?.fare}`}</h5>
                         </div>
 
                     </div>

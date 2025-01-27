@@ -50,8 +50,8 @@ const UserHome = () => {
         updateLocation();
 
         const handleNewRide = (data) => {
-            setNewRides((prev) => [...prev, data]);
             console.log("newRide", data);
+            setNewRides((prev) => [...prev, data]);
         };
 
         socket.on('new-ride', handleNewRide)

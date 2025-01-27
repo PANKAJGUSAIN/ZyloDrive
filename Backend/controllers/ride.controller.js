@@ -69,3 +69,25 @@ module.exports.getFare = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 }
+
+module.exports.confirmRide = async( req , res ) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ message: error.array() });
+    }
+    const { rideId , captainId } = req.body;
+    try{
+        const ride = await rideService.confirmRide(rideId , captainId);
+
+        // notying user that the ride has been accepted by a captain
+        sendMessageToSocketId(ride.user.socketId , {
+            event:'ride_confirmed',
+            data:ride
+        })
+
+        ride.otp = "";
+        return res.status(200).json(ride);
+    }catch(error){
+        return res.status(500).json({message: error.message });
+    } 
+}

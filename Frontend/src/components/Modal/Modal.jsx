@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import style from './Modal.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faHome, faLocation } from '@fortawesome/free-solid-svg-icons';
 import Button from '../button/button';
+import { CaptainContext } from '../../Context/CaptainContext';
 
 const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreData }) => {
     const [rideData, setrideData] = useState([])
+    const { captaindata } = useContext(CaptainContext);
 
     useEffect(() => {
         setrideData(data)
@@ -30,6 +32,19 @@ const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreDat
             ignoreData(id);
         }
          
+    }
+
+    const handleRideAccept= async (id) =>{
+        const result = await fetch(`${process.env.REACT_APP_API_URL}/rides/confirm`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Add this line
+                Authorization: `Bearer ${sessionStorage.getItem('zylotoken')}`,
+            },
+            body:JSON.stringify({rideId:id , captainId:captaindata._id})
+        })
+        const response = result.json();
+        console.log(response);
     }
 
     return (
@@ -57,7 +72,7 @@ const Modal = ({ isOpen, onClose, data, closeOnOverlayClick = false  , ignoreDat
                             <div style={{ fontSize:"14px", display:"flex" , flexWrap:"wrap", alignItems:"center", gap:"5px", height: "2rem" , padding:"10px 0px" }}>
                                 {`\u20B9 ${item.fare}`}
                             </div>
-                            <Button> Accept</Button>
+                            <Button onClick={()=>handleRideAccept(item._id)}> Accept</Button>
                             <Button onClick={()=>handleIgnoreItem(item._id)} > Ignore</Button>
                         </div>
                     </div>

@@ -17,4 +17,10 @@ router.get('/fare',
     query('pickup').isString().isLength({min: 3}).withMessage('Invalid Pickup Location'),
     query('destination').isString().isLength({min: 1}).withMessage('Invalid destination Location'),
     rideController.getFare);
+
+router.post('/confirm',authMiddleware.authCaptain ,
+    body('rideId').isMongoId().withMessage('Invalid ride ID'),
+    rideController.confirmRide
+)   
+
 module.exports = router;
