@@ -1,11 +1,11 @@
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import styles from "./CaptainHome.module.scss";
-import { lazy, Suspense, useContext, useEffect, useRef } from "react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import ZyloDriveCaptainHeader from "../../components/CaptainHeader/CaptainHeader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { CaptainContext } from "../../Context/CaptainContext";
 import { SocketContext } from "../../Context/SocketContext";
+import Modal from "../../components/Modal/Modal";
+
 
 const CaptainOverallSummary = lazy(() => import('../../components/CaptainOverallSummary/CaptainOverallSummary'));
 
@@ -13,7 +13,9 @@ const UserHome = () => {
     const navigate = useNavigate();
     const userWrapperRef = useRef(null);
     const { captaindata: data } = useContext(CaptainContext);
-    const { socket , sendMessage, recieveMessage } = useContext(SocketContext);
+    const { socket, sendMessage, recieveMessage } = useContext(SocketContext);
+    const [newRides, setNewRides] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
 
     // code to fetch captains location 
 
@@ -47,33 +49,49 @@ const UserHome = () => {
         // Initial location update
         updateLocation();
 
-        socket.on('new-ride' , (data)=>{
+        const handleNewRide = (data) => {
+            setNewRides((prev) => [...prev, data]);
             console.log("newRide", data);
-        })
+        };
+
+        socket.on('new-ride', handleNewRide)
 
         // Clean up the interval on component unmount
-        return () => clearInterval(interval);
+        return () => {
+
+        clearInterval(interval);
+        socket.off('new-ride', handleNewRide);
+        }
 
     }, [])
+
+    const ignoredData = (id) => {
+        setNewRides((prev) => prev.filter(ride => ride._id !== id));
+    }
 
 
 
 
     return (
         <div className={styles.CaptainHomeWrapper}>
-            <ZyloDriveCaptainHeader />
+            <ZyloDriveCaptainHeader setOpenModal={setOpenModal} />
+            <Modal
+                isOpen={openModal}
+                onClose={() => { setOpenModal(false)}}
+                ignoreData={ignoredData}
+                data={newRides || []}
+                closeOnOverlayClick={false}
+            />
             <div className={styles.CaptainMainWrapper}>
                 <div className={styles.CaptainMapWrapper} >
-                    <h1>Welcome to Captain Home</h1>
+                    <h1>Welcome to Captain {JSON.stringify(openModal)}</h1>
                 </div>
-                <div ref={userWrapperRef} className={styles.UserLocationWrapper}>
-                    <Suspense fallback={<>Loading subComponents....</>}>
-                        <Routes>
-                            <Route path="/" element={<CaptainOverallSummary ref={[userWrapperRef]} />} />
-                        </Routes>
-                    </Suspense>
-                    <Outlet />
-                </div>
+                <Suspense fallback={<>Loading subComponents....</>}>
+                    <Routes>
+                        <Route path="/" element={<CaptainOverallSummary />} />
+                    </Routes>
+                </Suspense>
+                <Outlet />
             </div>
         </div>
     )

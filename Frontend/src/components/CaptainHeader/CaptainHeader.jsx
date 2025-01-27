@@ -2,18 +2,17 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../svgs/logo";
 import styles from "../Header/Header.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faBell, faUser } from "@fortawesome/free-regular-svg-icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../Context/ThemeContext";
 import { CaptainContext } from "../../Context/CaptainContext";
 // import Button from "../button/button";
 
-const ZyloDriveCaptainHeader = () => {
+const ZyloDriveCaptainHeader = (props) => {
     const navigate = useNavigate();
     const profileRef = useRef();
     const [logout , setlogout ] = useState(false);
     const { captaindata:data } = useContext(CaptainContext)
-    console.log(data)
     const {currentTheme, changeTheme, AvaliableThemes} = useContext(ThemeContext)
     const handleProfileView = () => {
         if (profileRef.current) {
@@ -49,7 +48,10 @@ const ZyloDriveCaptainHeader = () => {
                 <p>ZyloDrive</p>
                 
             </div>
-            <div tabIndex={0}  onKeyDown={handleKeyPress} onClick={() => { handleProfileView() }} className={styles.userIcon}>
+            <div title="Avaliable Rides" tabIndex={0} style={{cursor:'pointer' , backgroundColor:"var(--button-background-color)" , width:"auto" , height:"90%" , display:"flex" , alignItems:"center" , justifyContent:"center" , textAlign:"center" , fontSize:"12px" , gap:"10px" , padding:"0 10px" , borderRadius:"8px" , fontWeight:"600" , color:"var(--button-text-color)"}} onClick={() => { props.setOpenModal(true) }}>
+                Find Rides<FontAwesomeIcon icon={faBell} style={{ fill: "red", stroke: "red", color: "red" }} />
+            </div>
+            <div title="User Profile" tabIndex={0}  onKeyDown={handleKeyPress} onClick={() => { handleProfileView() }} className={styles.userIcon}>
                 <FontAwesomeIcon icon={faUser} style={{ color: 'var(--background-color)' }} size="lg" />
             </div>
             <div className={styles.profileContainer} data-userclick="false" ref={profileRef}>
