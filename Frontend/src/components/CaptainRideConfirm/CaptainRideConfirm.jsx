@@ -54,16 +54,33 @@ const CaptainRideConfirm = forwardRef(({ }, ref) => {
                     Authorization:`Bearer ${sessionStorage.getItem('zylotoken')}`
                 }
             })
-            const response = await result.json();
-            console.log(response);
-            setisAccept(false);
+            if (!result.ok) {
+                // Handle HTTP errors
+                if (result.status === 400) {
+                    const response = await result.json();
+                    seterrors(response.message);
+                    setisAccept(false);
+                } else if (result.status === 500) {
+                    const response = await result.json();
+                    seterrors(response.message);
+                    setisAccept(false);
+                } else {
+                    console.error(`Error: ${result.status}`);
+                    seterrors(`Error: ${result.status}`);
+                    setisAccept(false);
+                }
+            } else {
+                const response = await result.json();
+                console.log(response);
+                setisAccept(false);
+            }
         }
     }
 
 
     return (
         <>
-            <div ref={userWrapperRef} style={{ minHeight: "25%" , overflow:'scroll'}} className={styles.UserLocationWrapper}>
+            <div ref={userWrapperRef} style={{ minHeight: "25%" , overflow:'auto'}} className={styles.UserLocationWrapper}>
                 <div style={{ padding: "2px" }}>
                     <div title="expand" data-ismaxed="false" ref={arrowref} tabIndex={0} role="move-up" style={{ cursor: "pointer", height: "5px", width: "20%", position: "absolute", left: "40%", background: "var(--item-border-hover-color)", borderRadius: "2px" }} onClick={toggleIsMaxed}></div>
                     <div style={{ display: 'flex', alignItems: "center", gap: "10px", padding: "10px", justifyContent: "space-between" }}>
