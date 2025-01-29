@@ -41,6 +41,7 @@ const UserHome = () => {
 
 
     useEffect(() => {
+        console.log('dataaa', data)
         sendMessage("join", { userType: "captain", userId: data._id });
 
         // Set up the interval to update location every 10 seconds

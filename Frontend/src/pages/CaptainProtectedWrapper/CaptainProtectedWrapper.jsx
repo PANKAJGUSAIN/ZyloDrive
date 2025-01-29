@@ -22,6 +22,7 @@ const CaptainProtectedWrapper = ()=>{
                     Authorization: `Bearer ${token}`
                 },
             }).then((response)=>{
+                console.log("CaptainProtectedWrapper",response)
                 const data = {
                     _id:response.data._id,
                     email:response.data.email,

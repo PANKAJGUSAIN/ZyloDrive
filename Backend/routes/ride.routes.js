@@ -18,15 +18,23 @@ router.get('/fare',
     query('destination').isString().isLength({min: 1}).withMessage('Invalid destination Location'),
     rideController.getFare);
 
+// ride accepted by captain and informed to user 
 router.post('/confirm',authMiddleware.authCaptain ,
     body('rideId').isMongoId().withMessage('Invalid ride ID'),
     rideController.confirmRide
 )   
 
+// start the ride after confirming the OTP
 router.get('/start-ride',authMiddleware.authCaptain, 
     query('rideId').isMongoId().withMessage('Invalid ride ID'),
     query('otp').isString().isLength({min:6 , max:6}).withMessage('Invalid OTP'),
     rideController.startRide
-)   
+)
+
+//  end the ride after confirming the OTP
+router.post('/end-ride',authMiddleware.authCaptain,
+    body('rideId').isMongoId().withMessage('Invalid ride ID'),
+    rideController.endRide
+)
 
 module.exports = router;

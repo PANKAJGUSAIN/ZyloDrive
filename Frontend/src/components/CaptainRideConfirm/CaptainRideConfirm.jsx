@@ -72,6 +72,7 @@ const CaptainRideConfirm = forwardRef(({ }, ref) => {
             } else {
                 const response = await result.json();
                 console.log(response);
+                navigate('/captains/riding',{state:{data:response}})
                 setisAccept(false);
             }
         }

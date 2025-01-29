@@ -121,3 +121,31 @@ module.exports.startRide = async(rideId , otp)=>{
     
     return ride;
 }
+
+module.exports.endRide = async(rideId , captain)=>{
+    if(!rideId){
+        throw new Error('Ride id is Required');
+    }
+
+    const ride = await rideModel.findOne({
+        _id: rideId,
+        captain:captain._id
+    }).populate('user').populate('captain')
+
+    if(!ride){
+        throw new Error('Ride not found');
+    }
+
+    if(ride.status !== 'ongoing'){
+        throw new Error('Ride not ongoing');
+    }
+
+    const result = await rideModel.findOneAndUpdate({
+        _id : rideId
+    },{
+        status:'completed'
+    })
+    console.log('result', result)
+    
+    return ride;
+}

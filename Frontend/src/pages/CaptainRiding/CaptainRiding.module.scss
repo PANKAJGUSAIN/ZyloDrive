@@ -1,0 +1,73 @@
+@use '../../mixins.scss';
+.CaptainLocationWrapper{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    background-color: var(--user-sideNavigation-card-color);
+    height: 100%;
+    transition: width 0.5s ease-out;
+    padding: 10px;
+
+    @include mixins.respond-to('desktop') {
+        &:hover{
+            width: 45%;
+        }
+    }
+
+    @include mixins.respond-to('tablet') {
+        height: 20%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        transition: bottom ,  height 0.5s ease-out;
+        // &:hover{
+        //     bottom: 0;
+        //     height: 90%;
+        // }
+    }
+    @include mixins.respond-to('mobile') {
+        height: 20%;
+        position: absolute;
+        bottom: 0%;
+        width: 100%;
+        transition: bottom , height 0.5s ease-out;
+        // &:hover{
+        //     bottom: 0;
+        //     height: 90%;
+        // }
+    }
+}
+
+.locationsearchwrapper{
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 0px;
+      }
+      
+      /* Track */
+      &::-webkit-scrollbar-track {
+        // box-shadow: inset 0 0 5px grey; 
+        border-radius: 10px;
+      }
+       
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: #BDBDBD; 
+        border-radius: 10px;
+      }
+      
+      /* Handle on hover */
+      &::-webkit-scrollbar-thumb:hover {
+        background: #BDBDBD; 
+      }
+    // background-color: red;
+}
+
+.Captainarrow{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}

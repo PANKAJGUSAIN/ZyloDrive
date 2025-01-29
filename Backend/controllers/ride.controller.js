@@ -113,3 +113,29 @@ module.exports.startRide = async (req, res) => {
 
 
 }
+
+module.exports.endRide = async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(400).json({ message: error.array() });
+    }
+    const { rideId } = req.body;
+    const captain = req.captain; // fetched from middleware authMiddleware.authCaptain
+
+    
+    try {
+        const ride = await rideService.endRide(rideId , captain);
+
+        sendMessageToSocketId(ride.user.socketId, {
+            event:'ride-ended',
+            data:ride
+        })
+
+        res.status(200).json(ride);
+    }
+    catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+    
+
+}

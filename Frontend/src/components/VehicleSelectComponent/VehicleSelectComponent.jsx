@@ -43,6 +43,7 @@ const VehicleSelectComponent = forwardRef(({ handleClick }, ref) => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization':`Bearer ${sessionStorage.getItem('zylotoken')}`
                     }
                 }).then(res => res.json()).then(data => {
                     setLoading(false)

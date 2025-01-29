@@ -55,8 +55,9 @@ const CaptainLogin = () => {
             axios.post(`${process.env.REACT_APP_API_URL}/captains/login`, data)
                 .then(response => response.data)
                 .then(data => {
-                    console.log(data);
+                    console.log("CaptainLogin",data)
                     changeCaptainData({
+                        _id:data.captain._id,
                         token: data.token,
                         email: data.captain.email,
                         fullname : data.captain.fullname , 

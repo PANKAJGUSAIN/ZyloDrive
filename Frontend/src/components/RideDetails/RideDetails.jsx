@@ -15,8 +15,8 @@ const RideDetails = forwardRef(({ }, ref) => {
     const { state } = location;
     const { vehicle: selectedVehicle, location: selectedLocation , data } = state || {};
     const [userWrapperRef] = ref;
-    const [loading, setLoading] = useState(true)
     const { socket } = useContext(SocketContext)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
 
@@ -37,7 +37,8 @@ const RideDetails = forwardRef(({ }, ref) => {
 
     useEffect(()=>{
         const handleRideStart = (data)=>{
-            console.log("handleRideStart", data)
+            console.log("handleRideStart", {vehicle:selectedVehicle , location:selectedLocation, data})
+            navigate('/riding',{state:{vehicle:selectedVehicle , location:selectedLocation, data}})
         }
         socket.on('ride-started',handleRideStart)
 
