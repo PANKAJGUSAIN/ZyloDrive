@@ -62,6 +62,7 @@ const CaptainRiding = () => {
         })
         const response = await result.json();
         console.log("response");
+        navigate('/captain-home');
     }
 
     useEffect(() => {

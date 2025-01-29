@@ -145,7 +145,6 @@ module.exports.endRide = async(rideId , captain)=>{
     },{
         status:'completed'
     })
-    console.log('result', result)
     
-    return ride;
+    return result;
 }

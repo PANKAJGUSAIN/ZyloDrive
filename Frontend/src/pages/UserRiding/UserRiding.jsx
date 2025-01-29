@@ -64,8 +64,8 @@ const UserRiding = () => {
     useEffect(() => {
         window.addEventListener('resize', resetcss);
         const handleRideComplete = (data) => {
-            navigate('/');
             console.log('RideEnded', data);
+            navigate('/home');
         }
         socket.on('ride-ended', handleRideComplete)
         return () => {
