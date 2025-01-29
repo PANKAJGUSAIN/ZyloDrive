@@ -5,6 +5,7 @@ import ZyloDriveCaptainHeader from "../../components/CaptainHeader/CaptainHeader
 import { CaptainContext } from "../../Context/CaptainContext";
 import { SocketContext } from "../../Context/SocketContext";
 import Modal from "../../components/Modal/Modal";
+import LiveTracking from "../../components/LiveTracking/LiveTracking";
 
 
 const CaptainOverallSummary = lazy(() => import('../../components/CaptainOverallSummary/CaptainOverallSummary'));
@@ -86,7 +87,7 @@ const UserHome = () => {
             />
             <div className={styles.CaptainMainWrapper}>
                 <div className={styles.CaptainMapWrapper} >
-                    <h1>Welcome to Captain {JSON.stringify(openModal)}</h1>
+                    <LiveTracking/>
                 </div>
                 <Suspense fallback={<>Loading subComponents....</>}>
                     <Routes>
