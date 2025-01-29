@@ -11,6 +11,7 @@ const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
 const mapsRoutes = require('./routes/map.routes');
 const RideRoutes = require('./routes/ride.routes');
+const rateLimit = require('express-rate-limit');
 // ---routesimport end 
 
 connectToDb();
