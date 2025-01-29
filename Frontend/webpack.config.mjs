@@ -8,6 +8,7 @@ import chalk from 'chalk'
 import { fileURLToPath } from 'url';
 import webpack from 'webpack';
 import dotenv from 'dotenv';
+import { GenerateSW } from 'workbox-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +27,7 @@ const config = (env, argv) => {
             path: path.resolve(__dirname, 'build'),
             publicPath: '/', // changed from '/' to '/repname' ZyloDrive/
             clean: true,
+            assetModuleFilename: 'assets/[hash][ext][query]', // Organize images/fonts
         },
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? 'source-map' : 'eval-source-map',
@@ -118,6 +120,7 @@ const config = (env, argv) => {
             port: 3001,
             hot: true,
             open: true,
+            liveReload:true,// Ensures files auto-reload
             client: {
                 overlay: {
                     warnings: true,
@@ -143,13 +146,16 @@ const config = (env, argv) => {
             minimize: isProduction,
             minimizer: [
                 new TerserPlugin({
+                    parallel:true, // Enables parallel processing
                     terserOptions: {
                         compress: {
                             drop_console: isProduction,
                         },
                     },
                 }),
-                new CssMinimizerPlugin(),
+                new CssMinimizerPlugin({
+                    parallel: true, // Uses multiple cores
+                }),
             ],
             splitChunks: {
                 chunks: 'all'
@@ -194,9 +200,54 @@ const config = (env, argv) => {
             }),
             new webpack.DefinePlugin({
                 'process.env': JSON.stringify(process.env)
+            }),
+            !isProduction ?  new GenerateSW({
+                clientsClaim: true,
+                skipWaiting: true,
+                maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // Increase limit for UI caching
+                navigateFallback: '/index.html', // Ensures SPA works offline
+                runtimeCaching: [
+                    // Cache static assets (JS, CSS, HTML)
+                    {
+                        urlPattern: /\.(?:js|css|html)$/,
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'static-assets',
+                            expiration: {
+                                maxEntries: 100,
+                                maxAgeSeconds: 7 * 24 * 60 * 60, // Cache for 7 days
+                            },
+                        },
+                    },
+                    // Cache images & fonts
+                    {
+                        urlPattern: /\.(?:png|jpg|jpeg|svg|woff|woff2|ttf|otf)$/,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'image-cache',
+                            expiration: {
+                                maxEntries: 50,
+                                maxAgeSeconds: 30 * 24 * 60 * 60, // Cache for 30 days
+                            },
+                        },
+                    },
+                    // Cache API responses
+                    {
+                        urlPattern: /^https:\/\/zylo-drive.vercel.app.com\/maps(\/.*)?$/,
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'maps-api-cache',
+                            expiration: {
+                                maxEntries: 20, // Cache only 20 responses
+                                maxAgeSeconds: 12 * 60 * 60, // Cache for 12 hours
+                            },
+                        },
+                    },
+                ],
             })
+            : null,
             // new webpack.DefinePlugin(envKeys), // Add DefinePlugin to inject environment variables
-        ],
+        ].filter(Boolean), // Remove null values
     };
 };
 export default config
