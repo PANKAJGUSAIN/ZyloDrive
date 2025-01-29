@@ -10,6 +10,7 @@ const VehicleSelectComponent = lazy(() => import('../../components/VehicleSelect
 const RideLookout = lazy(() => import('../../components/RideLookout/RideLookout'));
 const UserRideConfirmation = lazy(() => import('../../components/UserRideConfirmation/UserRideConfirmation'));
 const RideDetails = lazy(() => import('../../components/RideDetails/RideDetails'));
+const LiveTracking = lazy(() => import('../../components/LiveTracking/LiveTracking'));
 
 const UserHome = () => {
     const navigate = useNavigate();
@@ -28,7 +29,9 @@ const UserHome = () => {
             <ZyloDriveHeader />
             <div className={styles.UserMainWrapper}>
                 <div className={styles.UserMapWrapper} >
-                    <h1>Welcome to User Home</h1>
+                <Suspense fallback={<>Loading subComponents....</>}>
+                    <LiveTracking/>
+                </Suspense>
                 </div>
                 <div ref={userWrapperRef} className={styles.UserLocationWrapper}>
                     <Suspense fallback={<>Loading subComponents....</>}>
