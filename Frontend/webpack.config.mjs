@@ -25,7 +25,7 @@ const config = (env, argv) => {
         output: {
             filename: isProduction ? '[name].[contenthash].js' : '[name].js',
             path: path.resolve(__dirname, 'build'),
-            publicPath: '/', // changed from '/' to '/repname' ZyloDrive/
+            publicPath: '/ZyloDrive/', // changed from '/' to '/repname' ZyloDrive/
             clean: true,
             assetModuleFilename: 'assets/[hash][ext][query]', // Organize images/fonts
         },
@@ -183,6 +183,10 @@ const config = (env, argv) => {
                         to: 'assets',
                         globOptions: { ignore: ['**/.gitkeep'], },
                     },
+                    {
+                        from: 'public/manifest.json', // Copy manifest.json
+                        to: 'manifest.json',
+                    }
 
                 ],
             }),
@@ -201,11 +205,11 @@ const config = (env, argv) => {
             new webpack.DefinePlugin({
                 'process.env': JSON.stringify(process.env)
             }),
-            !isProduction ?  new GenerateSW({
+            isProduction ?  new GenerateSW({
                 clientsClaim: true,
                 skipWaiting: true,
                 maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // Increase limit for UI caching
-                navigateFallback: '/index.html', // Ensures SPA works offline
+                navigateFallback: '/ZyloDrive/index.html', // Ensures SPA works offline
                 runtimeCaching: [
                     // Cache static assets (JS, CSS, HTML)
                     {
