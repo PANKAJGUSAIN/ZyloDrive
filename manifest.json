@@ -1,0 +1,21 @@
+{
+    "name": "ZyloDrive",
+    "short_name": "ZyloDrive",
+    "description": "This is a Cloned Application",
+    "start_url": "/ZyloDrive/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "/ZyloDrive/assets/homepage-small.jpg",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/ZyloDrive/assets/homepage-small.jpg",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
